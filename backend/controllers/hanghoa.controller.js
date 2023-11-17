@@ -1,6 +1,7 @@
 const HangHoaModel = require("~/models/hanghoa.model").model;
 const HinhHHModel = require("~/models/hinhhh.model").model;
 const fs = require("fs");
+const path = require("path");
 class HangHoaController {
 	/**
 	 *
@@ -24,7 +25,7 @@ class HangHoaController {
 			const allHangHoas = await HangHoaModel.find(filter, "", {
 				skip: offset,
 				limit: pageSize,
-			});
+			}).populate("images");
 			const totalRows = await HangHoaModel.count(filter);
 			return res.status(200).json({
 				totalRows,
@@ -43,14 +44,21 @@ class HangHoaController {
 	 * @param {Function} next
 	 */
 	async laymot(req, res) {
-		const id = req.params.id;
-		const hanghoa = await HangHoaModel.findById(id);
-		if (!hanghoa) {
-			return res.status(404).json({
-				message: "Không tìm thấy hàng hóa",
+		try {
+			const id = req.params.id;
+			const hanghoa = await HangHoaModel.findOne({ id });
+
+			if (!hanghoa) {
+				return res.status(404).json({
+					message: "Không tìm thấy hàng hóa",
+				});
+			}
+			return res.status(200).json(hanghoa);
+		} catch (error) {
+			res.status(400).send({
+				message: error.message,
 			});
 		}
-		return res.status(200).json(hanghoa);
 	}
 	/**
 	 *
@@ -80,25 +88,26 @@ class HangHoaController {
 	 */
 	async themhinh(req, res) {
 		try {
-			const images = req.files;
-			const id = req.body.id;
-			for (const image of images) {
-				const path = `public/images/${image.originalname}`;
-				const hinh = new HinhHHModel({
-					path,
-					ten: image.originalname,
-				});
-				fs.writeFileSync(path, image.buffer);
-				await HangHoaModel.updateOne(
-					{ id },
-					{
-						$push: {
-							images: hinh,
-						},
-					}
-				);
-			}
-			return res.status(201);
+			const image = req.file;
+			const id = req.params.idHangHoa;
+
+			const path = `public/images/${image.filename}`;
+
+			const hinh = await HinhHHModel.create({
+				path,
+				ten: image.originalname,
+			});
+
+			await HangHoaModel.updateOne(
+				{ id },
+				{
+					$push: {
+						images: hinh,
+					},
+				}
+			);
+
+			return res.status(201).json(hinh.toObject());
 		} catch (error) {
 			return res.status(400).json({ message: error.message });
 		}
@@ -111,20 +120,23 @@ class HangHoaController {
 	 */
 	async xoahinh(req, res) {
 		try {
+			const idHangHoa = req.params.idHangHoa;
 			const id = req.params.id;
-			const hinh = await HinhHHModel.deleteOne({ id }, { returnOriginal: true });
 
-			fs.unlinkSync(hinh.path);
+			const hinh = await HinhHHModel.findOneAndDelete({ id }, { returnOriginal: true });
+
+			fs.unlinkSync(path.resolve(__dirname, "../uploads/images", hinh.path.split("/")[2]));
 
 			await HangHoaModel.updateOne(
-				{ id },
+				{ id: idHangHoa },
 				{
 					$pull: {
 						images: hinh,
 					},
 				}
 			);
-			return res.status(200);
+
+			return res.status(200).end();
 		} catch (error) {
 			return res.status(400).json({ message: error.message });
 		}
