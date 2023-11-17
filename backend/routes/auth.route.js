@@ -1,8 +1,4 @@
-const {
-	dangnhap,
-	xacthuc,
-	dangkytk: taouser,
-} = require("~/controllers/auth.controller");
+const { dangnhap, xacthuc, dangkytk: taouser } = require("~/controllers/auth.controller");
 
 const router = require("express").Router();
 

@@ -1,5 +1,4 @@
-const HangHoaModel =
-	require("~/models/hanghoa.model").model;
+const HangHoaModel = require("~/models/hanghoa.model").model;
 const HinhHHModel = require("~/models/hinhhh.model").model;
 const fs = require("fs");
 class HangHoaController {
@@ -22,17 +21,11 @@ class HangHoaController {
 					$options: "i",
 				};
 			}
-			const allHangHoas = await HangHoaModel.find(
-				filter,
-				"",
-				{
-					skip: offset,
-					limit: pageSize,
-				}
-			);
-			const totalRows = await HangHoaModel.count(
-				filter
-			);
+			const allHangHoas = await HangHoaModel.find(filter, "", {
+				skip: offset,
+				limit: pageSize,
+			});
+			const totalRows = await HangHoaModel.count(filter);
 			return res.status(200).json({
 				totalRows,
 				data: allHangHoas,
@@ -107,9 +100,7 @@ class HangHoaController {
 			}
 			return res.status(201);
 		} catch (error) {
-			return res
-				.status(400)
-				.json({ message: error.message });
+			return res.status(400).json({ message: error.message });
 		}
 	}
 	/**
@@ -121,10 +112,7 @@ class HangHoaController {
 	async xoahinh(req, res) {
 		try {
 			const id = req.params.id;
-			const hinh = await HinhHHModel.deleteOne(
-				{ id },
-				{ returnOriginal: true }
-			);
+			const hinh = await HinhHHModel.deleteOne({ id }, { returnOriginal: true });
 
 			fs.unlinkSync(hinh.path);
 
@@ -138,9 +126,7 @@ class HangHoaController {
 			);
 			return res.status(200);
 		} catch (error) {
-			return res
-				.status(400)
-				.json({ message: error.message });
+			return res.status(400).json({ message: error.message });
 		}
 	}
 	/**

@@ -15,14 +15,9 @@ const KhachHang = new mongoose.Schema(
 			type: String,
 			require: true,
 			validate: {
-				validator:
-					function isVietnamesePhoneNumberValid(
-						number
-					) {
-						return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(
-							number
-						);
-					},
+				validator: function isVietnamesePhoneNumberValid(number) {
+					return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number);
+				},
 				message: () => "Số điện thoại không hợp lệ",
 			},
 		},

@@ -8,9 +8,7 @@ class MongooseService {
 			// mongoose.connect(config.db.string, () => {
 			// 	console.log("Connected to mongoDB");
 			// });
-			const connection = await mongoose.connect(
-				config.db.string
-			);
+			const connection = await mongoose.connect(config.db.string);
 			autoIncrement.initialize(connection);
 			console.log(`Connected to DB`);
 		} catch (error) {

@@ -5,7 +5,8 @@
 	"scripts": {
 		"start": "node ./bin/www",
 		"dev": "nodemon",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"createstaff": "node ./createstaff.js"
 	},
 	"_moduleAliases": {
 		"~": "./"

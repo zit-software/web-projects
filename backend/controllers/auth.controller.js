@@ -1,10 +1,8 @@
 const PasswordUtil = require("~/utils/password.util");
 const TokenUtil = require("~/utils/token.util");
 
-const NhanVienModel =
-	require("~/models/nhanvien.model").model;
-const KhachHangModel =
-	require("~/models/khachhang.model").model;
+const NhanVienModel = require("~/models/nhanvien.model").model;
+const KhachHangModel = require("~/models/khachhang.model").model;
 class AuthController {
 	/**
 	 *
@@ -14,8 +12,7 @@ class AuthController {
 	 */
 	async dangkytk(req, res) {
 		try {
-			const { password, username, ...rest } =
-				req.body;
+			const { password, username, ...rest } = req.body;
 			const availableUser =
 				(await KhachHangModel.findOne({
 					username,
@@ -23,11 +20,8 @@ class AuthController {
 				(await NhanVienModel.findOne({
 					username,
 				}));
-			if (availableUser)
-				throw new Error("Tài Khoản Đã Tồn Tại");
-			const hashedPassword = await PasswordUtil.hash(
-				password
-			);
+			if (availableUser) throw new Error("Tài Khoản Đã Tồn Tại");
+			const hashedPassword = await PasswordUtil.hash(password);
 			const newUser = new KhachHangModel({
 				...rest,
 				password: hashedPassword,
@@ -76,18 +70,10 @@ class AuthController {
 				role: "nhanvien",
 			};
 
-			if (!user)
-				throw new Error(
-					`Không tồn tại tài khoản ${username}`
-				);
+			if (!user) throw new Error(`Không tồn tại tài khoản ${username}`);
 
-			const isValidPassword =
-				await PasswordUtil.compare(
-					password,
-					user.password
-				);
-			if (!isValidPassword)
-				throw new Error("Mật khẩu bị sai");
+			const isValidPassword = await PasswordUtil.compare(password, user.password);
+			if (!isValidPassword) throw new Error("Mật khẩu bị sai");
 			// Mật khẩu và tài khoản đúng
 			const accessToken = TokenUtil.sign(user);
 			return res.status(200).json({ accessToken });
@@ -107,9 +93,7 @@ class AuthController {
 	async xacthuc(req, res) {
 		try {
 			const authorization = req.headers.authorization;
-			const currentUser = TokenUtil.decode(
-				authorization.replace("Bearer ", "")
-			);
+			const currentUser = TokenUtil.decode(authorization.replace("Bearer ", ""));
 
 			return res.status(200).json(currentUser);
 		} catch (error) {

@@ -1,14 +1,5 @@
-const {
-	laytatca,
-	laymot,
-	dathang,
-	capnhat,
-	xoa,
-} = require("~/controllers/dathang.controller");
-const {
-	userAuth,
-	adminAuth,
-} = require("~/middlewares/authentication");
+const { laytatca, laymot, dathang, capnhat, xoa } = require("~/controllers/dathang.controller");
+const { userAuth, adminAuth } = require("~/middlewares/authentication");
 
 const router = require("express").Router();
 
