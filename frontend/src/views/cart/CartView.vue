@@ -2,7 +2,7 @@
   <div class="container mx-auto">
     <div class="row p-2 justify-content-between align-items-center mt-5">
       <div class="col col-4 info-container">
-        <h1 class="text-center">Cart Info</h1>
+        <h1 class="text-center">Thông tin giao hàng</h1>
         <table class="table">
           <thead>
             <tr>
@@ -22,7 +22,7 @@
         <span> B3-10 Đường số 3, KDC Long Thịnh</span>
       </div>
       <div class="col col-7 list-container">
-        <h1 class="text-center">Cart Items</h1>
+        <h1 class="text-center">Giỏ hàng</h1>
         <div class="items-container">
           <table class="table">
             <thead>
