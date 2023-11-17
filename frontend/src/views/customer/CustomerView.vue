@@ -16,6 +16,7 @@
             </button>
           </div>
           <VeeForm
+            :initial-values="user"
             class="w-100"
             @submit="submit"
             :validation-schema="validationSchema"
@@ -63,7 +64,7 @@
                 class="invalid-feedback animate__animated animate__headShake"
               />
             </div>
-            <div class="mt-3 d-flex justify-content-end">
+            <div class="mt-3 d-flex justify-content-end action-container">
               <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-floppy-disk"></i>
                 Lưu
@@ -91,11 +92,18 @@ main {
 form {
   width: 480px;
 }
+.action-container {
+  margin-bottom: 120px;
+}
 </style>
 <script>
 import customerImage from '@/assets/images/customer.jpeg'
 import * as yup from 'yup'
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
+import { useUserStore } from '@/stores/user'
+import khachHangService from '@/services/khachhang.service'
+
+const userStore = useUserStore()
 
 const validationSchema = yup.object().shape({
   ten: yup.string().required('Vui lòng nhập tên'),
@@ -112,12 +120,28 @@ export default {
   data() {
     return {
       customerImage,
-      validationSchema
+      validationSchema,
+      user: userStore.user
     }
   },
   methods: {
-    submit(value) {
-      console.log(value)
+    async submit(value) {
+      try {
+        await khachHangService.selfUpdate(value)
+        userStore.setUser({
+          ...userStore.user,
+          ...value
+        })
+        this.$toast.success('Cập nhật thông tin thành công', {
+          position: 'top-right',
+          duration: 3000
+        })
+      } catch (err) {
+        this.$toast.error('Cập nhật thông tin thất bại', {
+          position: 'top-right',
+          duration: 3000
+        })
+      }
     }
   }
 }

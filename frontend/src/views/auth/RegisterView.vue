@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4">
+  <div class="container py-4 animate__animated animate__fadeInDown">
     <vee-form
       class="card p-4 shadow shadow-sm"
       @submit="register"
@@ -17,7 +17,7 @@
           :class="{ 'is-invalid': errors.ten }"
           placeholder="Họ và tên"
         />
-        <error-message name="ten" class="invalid-feedback" />
+        <error-message name="ten" class="invalid-feedback animate__animated animate__headShake" />
       </div>
 
       <div class="mb-3">
@@ -29,7 +29,7 @@
           :class="{ 'is-invalid': errors.sdt }"
           placeholder="Số điện thoại"
         />
-        <error-message name="sdt" class="invalid-feedback" />
+        <error-message name="sdt" class="invalid-feedback animate__animated animate__headShake" />
       </div>
 
       <div class="mb-3">
@@ -41,7 +41,10 @@
           :class="{ 'is-invalid': errors.diachi }"
           placeholder="Địa chỉ"
         />
-        <error-message name="diachi" class="invalid-feedback" />
+        <error-message
+          name="diachi"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <div class="mb-3">
@@ -53,7 +56,10 @@
           :class="{ 'is-invalid': errors.username }"
           placeholder="Tên đăng nhập"
         />
-        <error-message name="username" class="invalid-feedback" />
+        <error-message
+          name="username"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <div class="mb-3">
@@ -66,7 +72,10 @@
           id="inputPassword"
           placeholder="Mật khẩu"
         />
-        <error-message name="password" class="invalid-feedback" />
+        <error-message
+          name="password"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <div class="mb-3">
@@ -79,7 +88,10 @@
           id="cfPassword"
           placeholder="Xác nhận mật khẩu"
         />
-        <error-message name="cfPassword" class="invalid-feedback" />
+        <error-message
+          name="cfPassword"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <button class="btn btn-primary" :disabled="isSubmitting" type="submit">Đăng ký</button>

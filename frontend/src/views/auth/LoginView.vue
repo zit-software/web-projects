@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4">
+  <div class="container py-4 animate__animated animate__bounceIn">
     <VeeForm
       class="card p-4 shadow shadow-sm"
       @submit="login"
@@ -16,7 +16,10 @@
           :class="{ 'is-invalid': errors.username }"
           placeholder="Tên đăng nhập"
         />
-        <error-message name="username" class="invalid-feedback" />
+        <error-message
+          name="username"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <div class="mb-3">
@@ -29,7 +32,10 @@
           id="inputPassword"
           placeholder="Mật khẩu"
         />
-        <error-message name="password" class="invalid-feedback" />
+        <error-message
+          name="password"
+          class="invalid-feedback animate__animated animate__headShake"
+        />
       </div>
 
       <button class="btn btn-primary" type="submit">Đăng nhập</button>

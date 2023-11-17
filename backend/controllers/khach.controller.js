@@ -82,12 +82,31 @@ class KhachController {
 	 * @param {import('express').Response} res
 	 * @param {Function} next
 	 */
-	async capnhat(req, res) {
+	async tu_capnhat(req, res) {
 		try {
 			const currentUser = req.currentUser;
-			const result = await KhachModel.updateOne(
+
+			const result = await KhachHangModel.findByIdAndUpdate(currentUser._id, req.body, { new: true });
+			console.log(result);
+			return res.status(200).json(result);
+		} catch (error) {
+			return res.status(400).send({
+				message: error.message,
+			});
+		}
+	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async capnhat(req, res) {
+		try {
+			const id = req.params.id;
+			const result = await KhachHangModel.updateOne(
 				{
-					_id: currentUser._id,
+					id,
 				},
 				req.body
 			);

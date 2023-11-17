@@ -22,14 +22,14 @@ class AuthenticationMiddleWares {
 			let currentUser;
 			switch (role) {
 				case "khach":
-					currentUser = await KhachHangModel.findOne({ id });
+					currentUser = (await KhachHangModel.findOne({ id })).toJSON();
 					req.currentUser = {
 						...currentUser,
 						role: "khach",
 					};
 					break;
 				case "nhanvien":
-					currentUser = await NhanVienModel.findOne({ id });
+					currentUser = (await NhanVienModel.findOne({ id })).toJSON();
 					req.currentUser = {
 						...currentUser,
 						role: "nhanvien",
