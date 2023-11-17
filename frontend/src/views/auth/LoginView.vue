@@ -54,6 +54,8 @@ form {
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import { RouterLink } from 'vue-router'
+import authService from '@/services/auth.service'
+import { useUserStore } from '@/stores/user'
 
 const validationScheme = yup.object().shape({
   username: yup
@@ -77,13 +79,22 @@ export default {
     RouterLink
   },
   data() {
+    const userStore = useUserStore()
+
     return {
-      validationScheme
+      validationScheme,
+      userStore
     }
   },
   methods: {
-    login(value) {
-      console.log(value)
+    async login(value) {
+      const { accessToken } = await authService.login(value)
+      this.userStore.setAccessToken(accessToken)
+
+      const res = await authService.auth()
+      this.userStore.setUser(res)
+
+      this.$router.push('/')
     }
   }
 }

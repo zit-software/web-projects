@@ -45,7 +45,7 @@ class AuthController {
 				accessToken,
 			});
 		} catch (error) {
-			res.send({
+			res.status(400).send({
 				msg: error.message,
 			});
 		}
@@ -61,20 +61,26 @@ class AuthController {
 			const { username, password } = req.body;
 
 			const user = {
-				...(await KhachHangModel.findOne({
-					username,
-				})),
+				...(
+					await KhachHangModel.findOne({
+						username,
+					})
+				)?.toObject(),
 				role: "khach",
 			} || {
-				...(await NhanVienModel.findOne({
-					username,
-				})),
+				...(
+					await NhanVienModel.findOne({
+						username,
+					})
+				)?.toObject(),
 				role: "nhanvien",
 			};
+
 			if (!user)
 				throw new Error(
 					`Không tồn tại tài khoản ${username}`
 				);
+
 			const isValidPassword =
 				await PasswordUtil.compare(
 					password,
@@ -83,10 +89,8 @@ class AuthController {
 			if (!isValidPassword)
 				throw new Error("Mật khẩu bị sai");
 			// Mật khẩu và tài khoản đúng
-			const accessToken = TokenUtil.sign(
-				user.toJSON()
-			);
-			return res.status(200).json(accessToken);
+			const accessToken = TokenUtil.sign(user);
+			return res.status(200).json({ accessToken });
 		} catch (error) {
 			console.log(error);
 			return res.status(500).send({

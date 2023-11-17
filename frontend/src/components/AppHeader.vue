@@ -47,7 +47,33 @@
             >
           </button>
 
-          <RouterLink to="/auth/login" v-if="$route.path !== '/auth/login'">
+          <div class="dropdown" :class="{ show: showModal }" v-if="logged" @click="toggleModal">
+            <button class="btn btn-secondary dropdown-toggle" type="button">
+              {{ user?.ten }}
+            </button>
+            <ul class="dropdown-menu" :class="{ show: showModal }">
+              <li>
+                <RouterLink class="dropdown-item" to="/profile">
+                  <i class="fa fa-user"></i>
+                  Thông tin tài khoản
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink class="dropdown-item" to="/settings">
+                  <i class="fa fa-cog"></i>
+                  Cài đặt
+                </RouterLink>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#" @click="logout">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  Đăng xuất</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <RouterLink to="/auth/login" v-else-if="$route.path !== '/auth/login'">
             <button class="btn btn-primary">Đăng nhập</button>
           </RouterLink>
 
@@ -61,11 +87,51 @@
 </template>
 
 <script>
+import { useUserStore } from '@/stores/user'
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
 export default {
   components: {
     RouterLink
+  },
+  data() {
+    const userStore = useUserStore()
+    const showModal = ref(false)
+
+    return {
+      userStore,
+      showModal
+    }
+  },
+  methods: {
+    toggleModal(event) {
+      event.stopPropagation()
+
+      this.showModal = !this.showModal
+    },
+    onWindowClick() {
+      this.showModal = false
+    },
+    logout() {
+      this.userStore.logout().then(() => {
+        this.$router.push('/')
+      })
+    }
+  },
+  computed: {
+    logged() {
+      return this.userStore.isLogged()
+    },
+    user() {
+      return this.userStore.user
+    }
+  },
+  mounted() {
+    window.addEventListener('click', this.onWindowClick)
+  },
+  unmounted() {
+    window.removeEventListener('click', this.onWindowClick)
   }
 }
 </script>

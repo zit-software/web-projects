@@ -4,7 +4,9 @@ const PasswordUtil = {
 		const saltRounds = 10;
 		return bcrypt.hash(data, saltRounds);
 	},
+
 	compare(password, hash) {
+		console.log(password, hash);
 		return bcrypt.compare(password, hash);
 	},
 };
