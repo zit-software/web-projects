@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-pannel" v-if="user?.role === 'nhanvien'">
+  <div class="admin-pannel" v-if="isAdmin">
     <RouterLink class="btn btn-sm btn-warning" to="/admin">
       <i class="fa fa-shield"></i>
       ADMIN CP
@@ -134,6 +134,9 @@ export default {
     },
     isStaff() {
       return this.userStore.user?.role === 'nhanvien'
+    },
+    isAdmin() {
+      return this.userStore.isAdmin()
     }
   },
   mounted() {

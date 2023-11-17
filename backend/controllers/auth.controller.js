@@ -101,7 +101,8 @@ class AuthController {
 			const _id = decoded._id;
 			let currentUser = await KhachHangModel.findById(_id);
 			if (!currentUser) {
-				currentUser = await NhanVienModel.findById(_id);
+				currentUser = (await NhanVienModel.findById(_id)).toObject();
+				currentUser.role = "nhanvien";
 			}
 			if (!currentUser) {
 				throw new Error("Không tìm thấy người dùng");

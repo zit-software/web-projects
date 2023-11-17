@@ -32,9 +32,9 @@ async function main() {
 		const newCustomer = await khachhangModel.model.create({
 			ten: faker.name.fullName(),
 			diachi: faker.address.streetAddress(),
-			sdt: faker.phone.phoneNumber(),
+			sdt: "0345678912",
 			username: faker.internet.userName(),
-			password: PasswordUtil.hashPassword(faker.internet.password()),
+			password: await PasswordUtil.hash(faker.internet.password()),
 		});
 
 		console.table(newCustomer.toObject());
