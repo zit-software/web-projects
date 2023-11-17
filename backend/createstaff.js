@@ -12,8 +12,8 @@ const rl = require("readline").createInterface({
 
 const readline = (message = "") => {
 	return new Promise((resolve) => {
-		rl.question(message, (password) => {
-			resolve(password);
+		rl.question(message, (line) => {
+			resolve(line);
 		});
 	});
 };

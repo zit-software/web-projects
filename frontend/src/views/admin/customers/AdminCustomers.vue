@@ -2,7 +2,23 @@
   <div class="container container-fluid py-2">
     <h2 class="py-2">Danh sách khách hàng</h2>
 
-    <table class="table table-responsive table-bordered">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      </li>
+      <li class="page-item active"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </li>
+    </ul>
+
+    <table class="table table-responsive">
       <thead class="table-light">
         <tr>
           <th>ID</th>
