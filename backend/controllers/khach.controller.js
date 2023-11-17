@@ -1,6 +1,5 @@
 const KhachHangModel = require("~/models/khachhang.model").model;
 const DatHangModel = require("~/models/dathang.model").model;
-
 class KhachController {
 	/**
 	 *
@@ -11,8 +10,8 @@ class KhachController {
 	async laymot(req, res) {
 		try {
 			const id = req.params.id;
-			const khach = await KhachHangModel.findOne({ id });
-			const donhangs = await DatHangModel.find({
+			const khach = await KhachHangModel.findById(id);
+			const donhangs = DatHangModel.find({
 				kh: {
 					_id: khach._id,
 				},
@@ -70,6 +69,25 @@ class KhachController {
 			const result = await KhachHangModel.deleteOne({
 				id,
 			});
+			return res.status(200).json(result);
+		} catch (error) {
+			return res.status(400).send({
+				message: error.message,
+			});
+		}
+	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async tu_capnhat(req, res) {
+		try {
+			const currentUser = req.currentUser;
+
+			const result = await KhachHangModel.findByIdAndUpdate(currentUser._id, req.body, { new: true });
+			console.log(result);
 			return res.status(200).json(result);
 		} catch (error) {
 			return res.status(400).send({

@@ -22,6 +22,10 @@ class KhachHangService {
     return await this.#client.put(`/${id}`, body)
   }
 
+  async selfUpdate(body) {
+    return await this.#client.put('', body)
+  }
+
   async deleteById(id) {
     return await this.#client.delete(`/${id}`)
   }

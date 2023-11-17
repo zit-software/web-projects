@@ -97,8 +97,15 @@ class AuthController {
 	async xacthuc(req, res) {
 		try {
 			const authorization = req.headers.authorization;
-			const currentUser = TokenUtil.decode(authorization.replace("Bearer ", ""));
-
+			const decoded = TokenUtil.decode(authorization.replace("Bearer ", ""));
+			const _id = decoded._id;
+			let currentUser = await KhachHangModel.findById(_id);
+			if (!currentUser) {
+				currentUser = await NhanVienModel.findById(_id);
+			}
+			if (!currentUser) {
+				throw new Error("Không tìm thấy người dùng");
+			}
 			return res.status(200).json(currentUser);
 		} catch (error) {
 			res.status(401).send({
