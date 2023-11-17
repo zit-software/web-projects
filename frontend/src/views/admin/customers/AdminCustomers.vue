@@ -1,8 +1,8 @@
 <template>
   <div class="container container-fluid py-2">
-    <h2>Danh sách khách hàng</h2>
+    <h2 class="py-2">Danh sách khách hàng</h2>
 
-    <table class="table table-responsive">
+    <table class="table table-responsive table-bordered">
       <thead class="table-light">
         <tr>
           <th>ID</th>

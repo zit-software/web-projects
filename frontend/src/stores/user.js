@@ -6,6 +6,8 @@ export const useUserStore = defineStore('user', () => {
   const user = ref(null)
   const accessToken = ref(localStorage.getItem('accessToken') || null)
 
+  let isFetched = false
+
   const setUser = (newUser) => {
     user.value = newUser
   }
@@ -33,9 +35,17 @@ export const useUserStore = defineStore('user', () => {
     return accessToken.value != null
   }
 
-  if (isLogged()) {
-    authService.auth().then((user) => setUser(user))
+  const isAdmin = () => {
+    if (!isLogged()) return false
+    if (!isFetched) return true
+
+    return user.value?.role === 'nhanvien'
   }
 
-  return { user, setUser, removeUser, setAccessToken, removeAccessToken, isLogged, logout }
+  if (isLogged()) {
+    authService.auth().then((user) => setUser(user))
+    isFetched = true
+  }
+
+  return { user, setUser, removeUser, setAccessToken, removeAccessToken, isLogged, logout, isAdmin }
 })

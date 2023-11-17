@@ -13,11 +13,26 @@
 <script>
 import AdminHeader from '@/components/AdminHeader.vue'
 import AdminSidebar from '@/components/AdminSidebar.vue'
+import { useUserStore } from '@/stores/user'
 import { RouterView } from 'vue-router'
 
 export default {
   name: 'AdminLayout',
-  components: { RouterView, AdminHeader, AdminSidebar }
+  components: { RouterView, AdminHeader, AdminSidebar },
+  data() {
+    const userStore = useUserStore()
+    return { userStore }
+  },
+  computed: {
+    isAdmin() {
+      return this.userStore.isAdmin()
+    }
+  },
+  mounted() {
+    if (!this.isAdmin) {
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

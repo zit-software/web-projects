@@ -47,6 +47,10 @@ const router = createRouter({
         {
           path: 'customers/:id/delete',
           component: () => import('@/views/admin/customers/AdminDeleteCustomer.vue')
+        },
+        {
+          path: 'customers/:id/edit',
+          component: () => import('@/views/admin/customers/AdminEditCustomer.vue')
         }
       ]
     }

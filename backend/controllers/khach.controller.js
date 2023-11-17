@@ -88,7 +88,7 @@ class KhachController {
 			const id = req.params.id;
 			const result = await KhachHangModel.updateOne(
 				{
-					_id: id,
+					id,
 				},
 				req.body
 			);
