@@ -10,8 +10,8 @@ class KhachController {
 	async laymot(req, res) {
 		try {
 			const id = req.params.id;
-			const khach = await KhachHangModel.findById(id);
-			const donhangs = DatHangModel.find({
+			const khach = await KhachHangModel.findOne({ id });
+			const donhangs = await DatHangModel.find({
 				kh: {
 					_id: khach._id,
 				},
@@ -31,7 +31,7 @@ class KhachController {
 	 */
 	async laytatca(req, res) {
 		try {
-			const offset = req.query.offset || 0;
+			const page = req.query.page || 1;
 			const pageSize = req.query.pageSize || null;
 			const term = req.query.term || null;
 			const searchBy = req.query.searchBy || null;
@@ -43,7 +43,7 @@ class KhachController {
 				};
 			}
 			const allKhachs = await KhachHangModel.find(filter, "", {
-				skip: offset,
+				skip: page * pageSize - pageSize,
 				limit: pageSize,
 			});
 			const totalRows = await KhachHangModel.count(filter);

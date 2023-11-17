@@ -10,8 +10,8 @@ class KhachHangService {
     this.#client = createClient('khach')
   }
 
-  async getAll() {
-    return await this.#client.get('')
+  async getAll(params) {
+    return await this.#client.get('', { params })
   }
 
   async getById(id) {

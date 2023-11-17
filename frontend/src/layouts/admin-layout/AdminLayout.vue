@@ -48,6 +48,7 @@ export default {
 .inner {
   display: flex;
   flex: 1;
+  overflow: hidden;
 }
 
 .content {
