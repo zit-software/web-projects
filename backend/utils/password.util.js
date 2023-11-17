@@ -6,7 +6,6 @@ const PasswordUtil = {
 	},
 
 	compare(password, hash) {
-		console.log(password, hash);
 		return bcrypt.compare(password, hash);
 	},
 };

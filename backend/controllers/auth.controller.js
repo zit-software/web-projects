@@ -54,21 +54,25 @@ class AuthController {
 		try {
 			const { username, password } = req.body;
 
-			const user = {
-				...(
-					await KhachHangModel.findOne({
-						username,
-					})
-				)?.toObject(),
-				role: "khach",
-			} || {
-				...(
+			let user = (
+				await KhachHangModel.findOne({
+					username,
+				})
+			)?.toObject();
+
+			if (user) {
+				user.role = "khach";
+			} else {
+				user = (
 					await NhanVienModel.findOne({
 						username,
 					})
-				)?.toObject(),
-				role: "nhanvien",
-			};
+				)?.toObject();
+
+				if (user) {
+					user.role = "nhanvien";
+				}
+			}
 
 			if (!user) throw new Error(`Không tồn tại tài khoản ${username}`);
 

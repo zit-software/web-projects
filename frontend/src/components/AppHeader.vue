@@ -1,4 +1,10 @@
 <template>
+  <div class="admin-pannel" v-if="user?.role === 'nhanvien'">
+    <RouterLink class="btn btn-sm btn-warning" to="/admin">
+      <i class="fa fa-shield"></i>
+      ADMIN CP
+    </RouterLink>
+  </div>
   <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
       <a class="navbar-brand" href="#!">Shopping</a
@@ -47,7 +53,7 @@
             >
           </button>
 
-          <div class="dropdown" :class="{ show: showModal }" v-if="logged" @click="toggleModal">
+          <div class="dropdown" :class="{ show: showModal }" v-if="isLogged" @click="toggleModal">
             <button class="btn btn-secondary dropdown-toggle" type="button">
               {{ user?.ten }}
             </button>
@@ -120,11 +126,14 @@ export default {
     }
   },
   computed: {
-    logged() {
+    isLogged() {
       return this.userStore.isLogged()
     },
     user() {
       return this.userStore.user
+    },
+    isStaff() {
+      return this.userStore.user?.role === 'nhanvien'
     }
   },
   mounted() {
@@ -135,3 +144,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.admin-pannel {
+  padding: 10px;
+  background: #000;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+</style>
