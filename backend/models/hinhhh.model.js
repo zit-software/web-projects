@@ -11,7 +11,7 @@ const HinhHH = new mongoose.Schema(
 		},
 		path: {
 			type: String,
-			require: true,
+			required: true,
 		},
 	},
 	{
