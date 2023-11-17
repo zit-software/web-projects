@@ -37,56 +37,60 @@
         </li>
       </ul>
 
-      <select v-model="pageSize" class="form-select" style="width: 100px">
+      <select v-model="pageSize" class="form-select" style="width: 150px">
         <option value="10">10</option>
         <option value="50">50</option>
         <option value="100">100</option>
       </select>
     </div>
 
-    <table class="table table-responsive">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Họ tên</th>
-          <th>Số điện thoại</th>
-          <th>Địa chỉ</th>
-          <th>Ngày tạo</th>
-          <th>Cập nhật</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
+    <div class="spinner-border" v-if="isLoading"></div>
 
-      <tbody>
-        <tr v-for="customer in customers" :key="customer.id">
-          <td>{{ customer.id }}</td>
-          <td>{{ customer.ten }}</td>
-          <td>{{ customer.sdt }}</td>
-          <td>{{ customer.diachi }}</td>
-          <td>{{ formatDate(customer.createdAt) }}</td>
-          <td>{{ formatDate(customer.updatedAt) }}</td>
-          <td>
-            <RouterLink
-              :to="`/admin/customers/${customer.id}/edit`"
-              class="btn btn-secondary btn-sm"
-            >
-              <i class="fa fa-pencil"></i>
-              Sửa
-            </RouterLink>
-          </td>
-          <td>
-            <RouterLink
-              :to="`/admin/customers/${customer.id}/delete`"
-              class="btn btn-danger btn-sm"
-            >
-              <i class="fa fa-trash"></i>
-              Xóa
-            </RouterLink>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-else class="table-container">
+      <table class="table table-responsive">
+        <thead class="table-light" style="position: sticky; top: 0; z-index: 100">
+          <tr>
+            <th>ID</th>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Ngày tạo</th>
+            <th>Cập nhật</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="customer in customers" :key="customer.id">
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.ten }}</td>
+            <td>{{ customer.sdt }}</td>
+            <td>{{ customer.diachi }}</td>
+            <td>{{ formatDate(customer.createdAt) }}</td>
+            <td>{{ formatDate(customer.updatedAt) }}</td>
+            <td>
+              <RouterLink
+                :to="`/admin/customers/${customer.id}/edit`"
+                class="btn btn-secondary btn-sm"
+              >
+                <i class="fa fa-pencil"></i>
+                Sửa
+              </RouterLink>
+            </td>
+            <td>
+              <RouterLink
+                :to="`/admin/customers/${customer.id}/delete`"
+                class="btn btn-danger btn-sm"
+              >
+                <i class="fa fa-trash"></i>
+                Xóa
+              </RouterLink>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -102,12 +106,14 @@ export default {
     const pageSize = ref(50)
     const total = ref([])
     const page = ref(1)
+    const isLoading = ref(false)
 
     return {
       customers,
       pageSize,
       total,
-      page
+      page,
+      isLoading
     }
   },
   beforeMount() {
@@ -122,6 +128,8 @@ export default {
     },
     async updateCustomerList() {
       try {
+        this.isLoading = true
+
         const res = await khachHangService.getAll({ pageSize: this.pageSize, page: this.page })
 
         this.customers = res.data
@@ -129,6 +137,8 @@ export default {
         this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
       } catch (error) {
         this.$toast.error(error.message)
+      } finally {
+        this.isLoading = false
       }
     },
     nextPage() {
@@ -152,3 +162,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.table-container {
+  max-height: 70vh;
+  overflow: auto;
+}
+</style>
