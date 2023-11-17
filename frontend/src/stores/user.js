@@ -1,3 +1,4 @@
+import authService from '@/services/auth.service'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
@@ -23,9 +24,18 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('accessToken')
   }
 
+  const logout = async () => {
+    removeAccessToken()
+    removeUser()
+  }
+
   const isLogged = () => {
     return accessToken.value != null
   }
 
-  return { user, setUser, removeUser, setAccessToken, removeAccessToken, isLogged }
+  if (isLogged()) {
+    authService.auth().then((user) => setUser(user))
+  }
+
+  return { user, setUser, removeUser, setAccessToken, removeAccessToken, isLogged, logout }
 })

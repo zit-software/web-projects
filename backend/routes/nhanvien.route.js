@@ -1,7 +1,4 @@
-const {
-	laymot,
-	laytatca,
-} = require("~/controllers/nhanvien.controller");
+const { laymot, laytatca } = require("~/controllers/nhanvien.controller");
 
 const router = require("express").Router();
 

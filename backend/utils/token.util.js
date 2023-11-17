@@ -5,10 +5,7 @@ const TokenUtil = {
 		return jwt.sign(data, config.jwt.ACCESS_TOKEN_KEY);
 	},
 	decode(token) {
-		return jwt.decode(
-			token,
-			config.jwt.ACCESS_TOKEN_KEY
-		);
+		return jwt.decode(token, config.jwt.ACCESS_TOKEN_KEY);
 	},
 };
 

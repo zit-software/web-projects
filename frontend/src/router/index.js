@@ -31,6 +31,24 @@ const router = createRouter({
       path: '/customer',
       name: 'customer',
       component: () => import('@/views/customer/CustomerView.vue')
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      children: [
+        {
+          path: '',
+          component: () => import('@/views/admin/AdminView.vue')
+        },
+        {
+          path: 'customers',
+          component: () => import('@/views/admin/customers/AdminCustomers.vue')
+        },
+        {
+          path: 'customers/:id/delete',
+          component: () => import('@/views/admin/customers/AdminDeleteCustomer.vue')
+        }
+      ]
     }
   ]
 })

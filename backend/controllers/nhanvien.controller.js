@@ -1,7 +1,6 @@
 const PasswordUtil = require("~/utils/password.util");
 const mongoose = require("mongoose");
-const NhanVienModel =
-	require("~/models/nhanvien.model").model;
+const NhanVienModel = require("~/models/nhanvien.model").model;
 class NhanVienController {
 	/**
 	 *
@@ -22,25 +21,17 @@ class NhanVienController {
 					$options: "i",
 				};
 			}
-			const allNhanViens = await NhanVienModel.find(
-				filter,
-				"",
-				{
-					skip: offset,
-					limit: pageSize,
-				}
-			);
-			const totalRows = await NhanVienModel.count(
-				filter
-			);
+			const allNhanViens = await NhanVienModel.find(filter, "", {
+				skip: offset,
+				limit: pageSize,
+			});
+			const totalRows = await NhanVienModel.count(filter);
 			return res.status(200).json({
 				totalRows,
 				data: allNhanViens,
 			});
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 	/**

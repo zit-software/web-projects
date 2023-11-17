@@ -1,14 +1,6 @@
-const mongoose = require("mongoose");
-const DatHangModel =
-	require("~/models/dathang.model").model;
-const HangHoaModel =
-	require("~/models/hanghoa.model").model;
-const ChiTietDatHangModel =
-	require("~/models/chitietdathang.model").model;
-const KhachHangModel =
-	require("~/models/khachhang.model").model;
-const NhanVienModel =
-	require("~/models/nhanvien.model").model;
+const DatHangModel = require("~/models/dathang.model").model;
+const HangHoaModel = require("~/models/hanghoa.model").model;
+const ChiTietDatHangModel = require("~/models/chitietdathang.model").model;
 class DatHangController {
 	/**
 	 *
@@ -29,25 +21,17 @@ class DatHangController {
 					$options: "i",
 				};
 			}
-			const allDatHangs = await DatHangModel.find(
-				filter,
-				"",
-				{
-					skip: offset,
-					limit: pageSize,
-				}
-			);
-			const totalRows = await DatHangModel.count(
-				filter
-			);
+			const allDatHangs = await DatHangModel.find(filter, "", {
+				skip: offset,
+				limit: pageSize,
+			});
+			const totalRows = await DatHangModel.count(filter);
 			return res.status(200).json({
 				totalRows,
 				data: allDatHangs,
 			});
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 	/**
@@ -67,9 +51,7 @@ class DatHangController {
 			}
 			return res.status(200).json(dathang);
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 	/**
@@ -85,9 +67,7 @@ class DatHangController {
 				throw new Error("Bạn chưa đăng nhập");
 			}
 			if (currentUser.role !== "khach") {
-				throw new Error(
-					"Bạn không phải là khách hàng"
-				);
+				throw new Error("Bạn không phải là khách hàng");
 			}
 			const { chitiets, ...info } = req.body;
 			const newDatHang = new DatHangModel({
@@ -99,43 +79,34 @@ class DatHangController {
 			// Validate
 			for (const chitiet of chitiets) {
 				const mahh = chitiet.mahh;
-				const hanghoa = await HangHoaModel.findById(
-					mahh
-				);
+				const hanghoa = await HangHoaModel.findById(mahh);
 				hhMap.set(mahh, hanghoa);
 				if (!hanghoa) {
-					throw new Error(
-						"Hàng hóa không tồn tại"
-					);
+					throw new Error("Hàng hóa không tồn tại");
 				}
 				if (hanghoa.soluong < chitiet.soluong) {
-					throw new Error(
-						`${hanghoa.ten} chỉ còn ${hanghoa.soluong} sản phẩm}`
-					);
+					throw new Error(`${hanghoa.ten} chỉ còn ${hanghoa.soluong} sản phẩm}`);
 				}
 			}
 			// Persist Data
 			const savedDatHang = await newDatHang.save();
 			for (const chitiet of chitiets) {
 				const hanghoa = hhMap.get(chitiet.mahh);
-				const newChiTietDatHang =
-					new ChiTietDatHangModel({
-						...chitiet,
-						gia: hanghoa.gia,
-						dh: savedDatHang._id,
-						hanghoa: hanghoa._id,
-					});
+				const newChiTietDatHang = new ChiTietDatHangModel({
+					...chitiet,
+					gia: hanghoa.gia,
+					dh: savedDatHang._id,
+					hanghoa: hanghoa._id,
+				});
 				await newChiTietDatHang.save();
-				await HangHoaModel.findByIdAndUpdate(mahh, {
+				await HangHoaModel.findByIdAndUpdate(chitiet.mahh, {
 					$inc: {
 						soluong: -chitiet.soluong,
 					},
 				});
 			}
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 	/**
@@ -147,17 +118,10 @@ class DatHangController {
 	async capnhat(req, res) {
 		try {
 			const id = req.params.id;
-			const newDatHang =
-				await DatHangModel.findByIdAndUpdate(
-					id,
-					req.body,
-					{ new: true }
-				);
+			const newDatHang = await DatHangModel.findByIdAndUpdate(id, req.body, { new: true });
 			return res.status(200).json(newDatHang);
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 	/**
@@ -168,15 +132,10 @@ class DatHangController {
 	 */
 	async xoa(req, res) {
 		try {
-			const result =
-				await DatHangModel.findByIdAndDelete(
-					req.params.id
-				);
+			const result = await DatHangModel.findByIdAndDelete(req.params.id);
 			return res.status(200).json(result);
 		} catch (error) {
-			return res
-				.status(400)
-				.send({ message: error.message });
+			return res.status(400).send({ message: error.message });
 		}
 	}
 }

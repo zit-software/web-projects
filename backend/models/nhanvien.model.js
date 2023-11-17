@@ -9,38 +9,37 @@ const NhanVien = new mongoose.Schema(
 		},
 		ten: {
 			type: String,
-			require: true,
+			required: true,
+		},
+		username: {
+			type: String,
+			required: true,
 		},
 		sdt: {
 			type: String,
-			require: true,
+			required: true,
 			validate: {
-				validator:
-					function isVietnamesePhoneNumberValid(
-						number
-					) {
-						return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(
-							number
-						);
-					},
+				validator: function isVietnamesePhoneNumberValid(number) {
+					return /(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/.test(number);
+				},
 				message: () => "Số điện thoại không hợp lệ",
 			},
 		},
 		chucvu: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		password: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		diachi: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		isDeleted: {
 			type: Boolean,
-			require: true,
+			required: true,
 			default: false,
 		},
 	},

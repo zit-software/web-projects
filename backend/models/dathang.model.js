@@ -9,11 +9,11 @@ const DatHang = new mongoose.Schema(
 		},
 		ngayDH: {
 			type: Date,
-			require: true,
+			required: true,
 		},
 		ngayGH: {
 			type: Date,
-			require: true,
+			required: true,
 		},
 		trangThaiDH: {
 			type: String,
@@ -31,7 +31,7 @@ const DatHang = new mongoose.Schema(
 		},
 		isDeleted: {
 			type: Boolean,
-			require: true,
+			required: true,
 			default: false,
 		},
 	},

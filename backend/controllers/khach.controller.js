@@ -1,7 +1,5 @@
-const KhachHangModel =
-	require("~/models/khachhang.model").model;
-const DatHangModel =
-	require("~/models/dathang.model").model;
+const KhachHangModel = require("~/models/khachhang.model").model;
+const DatHangModel = require("~/models/dathang.model").model;
 class KhachController {
 	/**
 	 *
@@ -15,12 +13,10 @@ class KhachController {
 			const khach = await KhachHangModel.findById(id);
 			const donhangs = DatHangModel.find({
 				kh: {
-					id,
+					_id: khach._id,
 				},
 			});
-			return res
-				.status(200)
-				.json({ khach, donhangs });
+			return res.status(200).json({ khach, donhangs });
 		} catch (error) {
 			return res.status(400).send({
 				message: error.message,
@@ -46,17 +42,11 @@ class KhachController {
 					$options: "i",
 				};
 			}
-			const allKhachs = await KhachHangModel.find(
-				filter,
-				"",
-				{
-					skip: offset,
-					limit: pageSize,
-				}
-			);
-			const totalRows = await KhachModel.count(
-				filter
-			);
+			const allKhachs = await KhachHangModel.find(filter, "", {
+				skip: offset,
+				limit: pageSize,
+			});
+			const totalRows = await KhachModel.count(filter);
 			return res.status(200).json({
 				totalRows,
 				data: allKhachs,
@@ -101,6 +91,7 @@ class KhachController {
 				},
 				req.body
 			);
+			d;
 			return res.status(200).json(result);
 		} catch (error) {
 			return res.status(400).send({

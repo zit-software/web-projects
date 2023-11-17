@@ -13,18 +13,18 @@ const ChiTietDatHang = new mongoose.Schema(
 		},
 		soluong: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		gia: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		giamgia: {
 			type: Number,
 		},
 		isDeleted: {
 			type: Boolean,
-			require: true,
+			required: true,
 			default: false,
 		},
 	},

@@ -9,19 +9,19 @@ const HangHoa = new mongoose.Schema(
 		},
 		ten: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		mota: {
 			type: String,
-			require: true,
+			required: true,
 		},
 		gia: {
 			type: Number,
-			require: true,
+			required: true,
 		},
 		soluong: {
 			type: Number,
-			require: true,
+			required: true,
 			default: 0,
 		},
 		ghichu: {
@@ -29,12 +29,12 @@ const HangHoa = new mongoose.Schema(
 		},
 		isDeleted: {
 			type: Boolean,
-			require: true,
+			required: true,
 			default: false,
 		},
 		images: {
 			type: Array,
-			require: true,
+			required: true,
 			default: [],
 		},
 	},

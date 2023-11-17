@@ -1,27 +1,16 @@
 <script>
-import { RouterView } from 'vue-router'
-import AppHeader from '@/components/AppHeader.vue'
+import AdminLayout from './layouts/admin-layout/AdminLayout.vue'
+import CustomerLayout from './layouts/customer-layout/CustomerLayout.vue'
 
 export default {
   components: {
-    RouterView,
-    AppHeader
+    CustomerLayout,
+    AdminLayout
   }
 }
 </script>
 
 <template>
-  <AppHeader />
-
-  <div class="bg-light">
-    <RouterView />
-  </div>
-
-  <footer class="py-3 bg-dark position-fixed start-0 end-0 bottom-0">
-    <div class="container">
-      <p class="m-0 text-center text-white">
-        Copyright &copy; Your Website {{ new Date().getFullYear() }}
-      </p>
-    </div>
-  </footer>
+  <AdminLayout v-if="$route.fullPath.split('/')[1] === 'admin'" />
+  <CustomerLayout v-else />
 </template>
