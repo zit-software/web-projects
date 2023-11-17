@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto">
-    <div class="row p-2 justify-content-between align-items-center">
+    <div class="row p-2 justify-content-between align-items-center mt-5">
       <div class="col col-4 info-container">
         <h1 class="text-center">Cart Info</h1>
         <table class="table">
@@ -85,6 +85,20 @@
         </div>
       </div>
     </div>
+    <div class="row justify-content-end flex-row">
+      <div class="button-container">
+        <button type="button" class="btn btn-dark">
+          <i class="fa-solid fa-house"></i>
+          Trở lại
+        </button>
+      </div>
+      <div class="button-container">
+        <button type="button" class="btn btn-primary">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Đặt Hàng
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -104,6 +118,9 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
+}
+.button-container {
+  width: fit-content;
 }
 </style>
 <script>
