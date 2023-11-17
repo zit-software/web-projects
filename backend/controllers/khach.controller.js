@@ -46,7 +46,7 @@ class KhachController {
 				skip: offset,
 				limit: pageSize,
 			});
-			const totalRows = await KhachModel.count(filter);
+			const totalRows = await KhachHangModel.count(filter);
 			return res.status(200).json({
 				totalRows,
 				data: allKhachs,
@@ -85,7 +85,7 @@ class KhachController {
 	async capnhat(req, res) {
 		try {
 			const id = req.params.id;
-			const result = await KhachModel.updateOne(
+			const result = await KhachHangModel.updateOne(
 				{
 					_id: id,
 				},
