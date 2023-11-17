@@ -1,9 +1,6 @@
-const mongoose = require("mongoose");
 const DatHangModel = require("~/models/dathang.model").model;
 const HangHoaModel = require("~/models/hanghoa.model").model;
 const ChiTietDatHangModel = require("~/models/chitietdathang.model").model;
-const KhachHangModel = require("~/models/khachhang.model").model;
-const NhanVienModel = require("~/models/nhanvien.model").model;
 class DatHangController {
 	/**
 	 *
@@ -102,7 +99,7 @@ class DatHangController {
 					hanghoa: hanghoa._id,
 				});
 				await newChiTietDatHang.save();
-				await HangHoaModel.findByIdAndUpdate(mahh, {
+				await HangHoaModel.findByIdAndUpdate(chitiet.mahh, {
 					$inc: {
 						soluong: -chitiet.soluong,
 					},
