@@ -12,7 +12,7 @@ class MongooseService {
 				config.db.string
 			);
 			autoIncrement.initialize(connection);
-			console.log("Connected to DB");
+			console.log(`Connected to DB`);
 		} catch (error) {
 			console.log(error);
 		}
