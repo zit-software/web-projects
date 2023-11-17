@@ -50,7 +50,7 @@ class AuthController {
 	 */
 	async dangnhap(req, res) {
 		try {
-			const { tk, mk } = req.body;
+			const { username, password } = req.body;
 
 			const user = {
 				...(await KhachHangModel.findOne({
@@ -65,10 +65,13 @@ class AuthController {
 			};
 			if (!user)
 				throw new Error(
-					`Không tồn tại tài khoản ${tk}`
+					`Không tồn tại tài khoản ${username}`
 				);
 			const isValidPassword =
-				await PasswordUtil.compare(mk, user.mk);
+				await PasswordUtil.compare(
+					password,
+					user.password
+				);
 			if (!isValidPassword)
 				throw new Error("Mật khẩu bị sai");
 			// Mật khẩu và tài khoản đúng

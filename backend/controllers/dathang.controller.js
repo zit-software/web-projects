@@ -61,11 +61,9 @@ class DatHangController {
 			const id = req.params.id;
 			const dathang = await DatHangModel.findById(id);
 			if (!dathang) {
-				return res
-					.status(404)
-					.json({
-						message: "Không tìm thấy đơn hàng",
-					});
+				return res.status(404).json({
+					message: "Không tìm thấy đơn hàng",
+				});
 			}
 			return res.status(200).json(dathang);
 		} catch (error) {
@@ -123,6 +121,7 @@ class DatHangController {
 				const newChiTietDatHang =
 					new ChiTietDatHangModel({
 						...chitiet,
+						gia: hanghoa.gia,
 						dh: savedDatHang._id,
 						hanghoa: hanghoa._id,
 					});
