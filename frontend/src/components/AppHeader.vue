@@ -47,8 +47,12 @@
             >
           </button>
 
-          <RouterLink to="/auth/login">
+          <RouterLink to="/auth/login" v-if="$route.path !== '/auth/login'">
             <button class="btn btn-primary">Đăng nhập</button>
+          </RouterLink>
+
+          <RouterLink to="/auth/register" v-else>
+            <button class="btn btn-primary">Đăng ký</button>
           </RouterLink>
         </div>
       </div>

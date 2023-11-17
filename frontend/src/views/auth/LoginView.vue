@@ -8,26 +8,28 @@
     >
       <h2>Đăng nhập</h2>
       <div class="mb-3">
-        <label for="staticEmail" class="form-label">Tên đăng nhập</label>
-        <Field
+        <label for="username" class="form-label">Tên đăng nhập</label>
+        <field
           name="username"
-          type="username"
+          id="username"
           class="form-control"
           :class="{ 'is-invalid': errors.username }"
+          placeholder="Tên đăng nhập"
         />
-        <ErrorMessage name="username" class="invalid-feedback" />
+        <error-message name="username" class="invalid-feedback" />
       </div>
 
       <div class="mb-3">
-        <label for="inputPassword" class="col-form-label">Password</label>
-        <Field
+        <label for="inputPassword" class="col-form-label">Mật khẩu</label>
+        <field
           name="password"
           type="password"
           class="form-control"
           :class="{ 'is-invalid': errors.password }"
           id="inputPassword"
+          placeholder="Mật khẩu"
         />
-        <ErrorMessage name="password" class="invalid-feedback" />
+        <error-message name="password" class="invalid-feedback" />
       </div>
 
       <button class="btn btn-primary" type="submit">Đăng nhập</button>
