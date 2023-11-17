@@ -121,11 +121,15 @@ export default {
       return dayjs(date).format('HH:mm, DD/MM/YYYY')
     },
     async updateCustomerList() {
-      const res = await khachHangService.getAll({ pageSize: this.pageSize, page: this.page })
+      try {
+        const res = await khachHangService.getAll({ pageSize: this.pageSize, page: this.page })
 
-      this.customers = res.data
-      const totalPages = Math.floor(res.totalRows / this.pageSize + 0.9)
-      this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
+        this.customers = res.data
+        const totalPages = Math.floor(res.totalRows / this.pageSize + 0.9)
+        this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
+      } catch (error) {
+        this.$toast.error(error.message)
+      }
     },
     nextPage() {
       if (this.page < this.total.length) {

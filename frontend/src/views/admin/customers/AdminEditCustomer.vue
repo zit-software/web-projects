@@ -103,10 +103,11 @@ export default {
   methods: {
     async handleUpdate(values) {
       try {
-        await khachhangService.updateById(values.id)
+        await khachhangService.updateById(values.id, values)
+        this.$toast.success('Cập nhật khách hàng thành công')
         this.$router.back()
       } catch (error) {
-        alert(error.message)
+        this.$toast.error(error.message)
       }
     }
   }

@@ -103,7 +103,7 @@ export default {
 
         this.$router.push('/')
       } catch (error) {
-        alert(error.message)
+        this.$toast.error(error.message)
       }
     }
   }

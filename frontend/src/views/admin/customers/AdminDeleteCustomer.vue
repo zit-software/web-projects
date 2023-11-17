@@ -46,8 +46,14 @@ export default {
   },
   methods: {
     async handleDelete() {
-      await khachhangService.deleteById(this.$route.params.id)
-      this.$router.back()
+      try {
+        await khachhangService.deleteById(this.$route.params.id)
+
+        this.$toast.info('Xóa khách hàng thành công')
+        this.$router.back()
+      } catch (error) {
+        this.$toast.error(error.message)
+      }
     }
   },
   async beforeMount() {
