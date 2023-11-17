@@ -45,8 +45,8 @@ class AuthController {
 				accessToken,
 			});
 		} catch (error) {
-			res.send({
-				msg: error.message,
+			return res.status(400).send({
+				message: error.message,
 			});
 		}
 	}
