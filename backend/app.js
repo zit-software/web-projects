@@ -27,6 +27,8 @@ app.use(
 	})
 );
 
+app.use("/public", express.static(path.join(__dirname, "./uploads")));
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
