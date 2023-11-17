@@ -94,10 +94,10 @@ class KhachController {
 	 */
 	async capnhat(req, res) {
 		try {
-			const id = req.params.id;
+			const currentUser = req.currentUser;
 			const result = await KhachModel.updateOne(
 				{
-					_id: id,
+					_id: currentUser._id,
 				},
 				req.body
 			);
