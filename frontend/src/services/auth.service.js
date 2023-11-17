@@ -1,6 +1,9 @@
 import createClient from '@/utils/createClient'
 
 class AuthService {
+  /**
+   * @type {import('axios').AxiosInstance}
+   */
   #client
 
   constructor() {

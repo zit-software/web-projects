@@ -88,13 +88,17 @@ export default {
   },
   methods: {
     async login(value) {
-      const { accessToken } = await authService.login(value)
-      this.userStore.setAccessToken(accessToken)
+      try {
+        const { accessToken } = await authService.login(value)
+        this.userStore.setAccessToken(accessToken)
 
-      const res = await authService.auth()
-      this.userStore.setUser(res)
+        const res = await authService.auth()
+        this.userStore.setUser(res)
 
-      this.$router.push('/')
+        this.$router.push('/')
+      } catch (error) {
+        alert(error.message)
+      }
     }
   }
 }

@@ -149,15 +149,19 @@ export default {
   },
   methods: {
     async register(value) {
-      const { accessToken } = await authService.register(value)
+      try {
+        const { accessToken } = await authService.register(value)
 
-      this.userStore.setAccessToken(accessToken)
+        this.userStore.setAccessToken(accessToken)
 
-      const res = await authService.auth()
+        const res = await authService.auth()
 
-      this.userStore.setUser(res)
+        this.userStore.setUser(res)
 
-      this.$router.push('/')
+        this.$router.push('/')
+      } catch (error) {
+        alert(error.message)
+      }
     }
   }
 }

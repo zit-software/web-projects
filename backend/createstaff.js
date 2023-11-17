@@ -33,8 +33,6 @@ async function main() {
 				username,
 			}));
 
-		console.log(existingUser);
-
 		if (existingUser) {
 			console.log("Username is already taken, try again!");
 			username = null;
@@ -59,7 +57,7 @@ async function main() {
 	});
 
 	console.log("Created new staff: ");
-	console.table(newStaff);
+	console.table(newStaff.toObject());
 }
 
 main()

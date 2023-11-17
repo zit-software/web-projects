@@ -53,7 +53,7 @@
             </button>
             <ul class="dropdown-menu" :class="{ show: showModal }">
               <li>
-                <RouterLink class="dropdown-item" to="/profile">
+                <RouterLink class="dropdown-item" to="/customer">
                   <i class="fa fa-user"></i>
                   Thông tin tài khoản
                 </RouterLink>
