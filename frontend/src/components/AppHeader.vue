@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
       <a class="navbar-brand" href="#!">Shopping</a
       ><button
@@ -47,8 +47,12 @@
             >
           </button>
 
-          <RouterLink to="/auth/login">
+          <RouterLink to="/auth/login" v-if="$route.path !== '/auth/login'">
             <button class="btn btn-primary">Đăng nhập</button>
+          </RouterLink>
+
+          <RouterLink to="/auth/register" v-else>
+            <button class="btn btn-primary">Đăng ký</button>
           </RouterLink>
         </div>
       </div>
