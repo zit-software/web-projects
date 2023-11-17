@@ -56,6 +56,30 @@ class DatHangController {
 	 * @param {import('express').Response} res
 	 * @param {Function} next
 	 */
+	async laymot(req, res) {
+		try {
+			const id = req.params.id;
+			const dathang = await DatHangModel.findById(id);
+			if (!dathang) {
+				return res
+					.status(404)
+					.json({
+						message: "Không tìm thấy đơn hàng",
+					});
+			}
+			return res.status(200).json(dathang);
+		} catch (error) {
+			return res
+				.status(400)
+				.send({ message: error.message });
+		}
+	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
 	async dathang(req, res) {
 		try {
 			const currentUser = req.currentUser;
@@ -115,5 +139,46 @@ class DatHangController {
 				.send({ message: error.message });
 		}
 	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async capnhat(req, res) {
+		try {
+			const id = req.params.id;
+			const newDatHang =
+				await DatHangModel.findByIdAndUpdate(
+					id,
+					req.body,
+					{ new: true }
+				);
+			return res.status(200).json(newDatHang);
+		} catch (error) {
+			return res
+				.status(400)
+				.send({ message: error.message });
+		}
+	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async xoa(req, res) {
+		try {
+			const result =
+				await DatHangModel.findByIdAndDelete(
+					req.params.id
+				);
+			return res.status(200).json(result);
+		} catch (error) {
+			return res
+				.status(400)
+				.send({ message: error.message });
+		}
+	}
 }
-export default new DatHangController();
+module.exports = new DatHangController();

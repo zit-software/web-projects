@@ -16,7 +16,7 @@ const ChiTietDatHang = new mongoose.Schema(
 			require: true,
 		},
 		gia: {
-			type: BigInt,
+			type: Number,
 			require: true,
 		},
 		giamgia: {
