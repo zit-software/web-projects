@@ -113,6 +113,34 @@ class AuthController {
 			});
 		}
 	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async doimk(req, res) {
+		try {
+			const currentUser = req.currentUser;
+			const { newPassword, password } = req.body;
+			if (!PasswordUtil.compare(password, currentUser.password)) throw new Error("Mật khẩu không đúng");
+			if (currentUser.role === "khach") {
+				await KhachHangModel.findByIdAndUpdate(currentUser._id, {
+					password: PasswordUtil.hash(newPassword),
+				});
+			} else {
+				await NhanVienModel.findByIdAndUpdate(currentUser._id, {
+					password: PasswordUtil.hash(newPassword),
+				});
+			}
+			return res.status(200).json({ message: "Đổi mật khẩu thành công" });
+		} catch (error) {
+			console.log(error);
+			res.status(401).send({
+				message: error.message,
+			});
+		}
+	}
 }
 
 module.exports = new AuthController();

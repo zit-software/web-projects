@@ -46,12 +46,12 @@
           </li>
         </ul>
         <div class="d-flex gap-1">
-          <button class="btn btn-outline-dark" type="submit">
+          <RouterLink class="btn btn-outline-dark" to="/cart">
             <i class="fa fa-cart-shopping"></i>Cart<span
               class="badge bg-dark text-white ms-1 rounded-pill"
               >0</span
             >
-          </button>
+          </RouterLink>
 
           <div class="dropdown" :class="{ show: showModal }" v-if="isLogged" @click="toggleModal">
             <button class="btn btn-secondary dropdown-toggle" type="button">

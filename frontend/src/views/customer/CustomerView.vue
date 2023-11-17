@@ -10,7 +10,12 @@
         >
           <div class="d-flex align-items-center">
             <h1>Thông tin cá nhân</h1>
-            <button class="btn btn-dark ms-2">
+            <button
+              type="button"
+              class="btn btn-dark ms-2"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
               <i class="fa-solid fa-lock"></i>
               Đổi mật khẩu
             </button>
@@ -75,6 +80,7 @@
       </div>
     </div>
   </main>
+  <ChangePassword></ChangePassword>
 </template>
 <style>
 main {
@@ -102,6 +108,7 @@ import * as yup from 'yup'
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import { useUserStore } from '@/stores/user'
 import khachHangService from '@/services/khachhang.service'
+import ChangePassword from './ChangePassword.vue'
 
 const userStore = useUserStore()
 
@@ -115,16 +122,21 @@ export default {
   components: {
     VeeForm,
     Field,
-    ErrorMessage
+    ErrorMessage,
+    ChangePassword
   },
   data() {
     return {
       customerImage,
       validationSchema,
-      user: userStore.user
+      user: userStore.user,
+      open: false
     }
   },
   methods: {
+    openModal() {
+      this.open = true
+    },
     async submit(value) {
       try {
         await khachHangService.selfUpdate(value)

@@ -21,6 +21,10 @@ class AuthService {
   async auth() {
     return await this.#client.get('')
   }
+
+  async changePassword(body) {
+    return await this.#client.post('/change-password', body)
+  }
 }
 
 export default new AuthService()
