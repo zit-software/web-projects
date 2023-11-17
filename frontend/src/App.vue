@@ -13,7 +13,9 @@ export default {
 <template>
   <AppHeader />
 
-  <RouterView />
+  <div class="bg-light">
+    <RouterView />
+  </div>
 
   <footer class="py-5 bg-dark">
     <div class="container">

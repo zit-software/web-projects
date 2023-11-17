@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
       <a class="navbar-brand" href="#!">Shopping</a
       ><button
