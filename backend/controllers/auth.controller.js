@@ -35,7 +35,15 @@ class AuthController {
 			});
 			await newUser.save();
 
-			return res.status(200).json(newUser);
+			const accessToken = TokenUtil.sign({
+				...newUser.toJSON(),
+				role: "khach",
+			});
+
+			return res.status(200).json({
+				newUser,
+				accessToken,
+			});
 		} catch (error) {
 			res.send({
 				msg: error.message,
