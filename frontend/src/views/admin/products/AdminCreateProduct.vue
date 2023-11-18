@@ -6,7 +6,7 @@
       v-slot="{ errors, values }"
       @submit="submit"
     >
-      <h2 class="card-header">Thêm hàng hóa</h2>
+      <h4 class="card-header">Thêm hàng hóa</h4>
 
       <div class="card-body">
         <div class="mb-2">

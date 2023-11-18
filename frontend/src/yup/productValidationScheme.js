@@ -7,5 +7,5 @@ export const productValidationScheme = yup.object().shape({
     .number()
     .required('Giá sản phẩm không được để trống')
     .positive('Giá sản phẩm phải là số dương'),
-  soluong: yup.number().optional().positive('Số lượng sản phẩm phải là số dương')
+  soluong: yup.number().optional().min(0, 'Số lượng sản phẩm phải >= 0')
 })

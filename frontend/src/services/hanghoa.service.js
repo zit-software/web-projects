@@ -14,8 +14,8 @@ class HangHoaService {
     return await this.#client.post('', body)
   }
 
-  async getAll() {
-    return await this.#client.get('')
+  async getAll(params) {
+    return await this.#client.get('', { params })
   }
 
   async getById(id) {

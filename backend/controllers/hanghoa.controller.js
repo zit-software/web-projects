@@ -120,24 +120,30 @@ class HangHoaController {
 	 */
 	async xoahinh(req, res) {
 		try {
-			const idHangHoa = req.params.idHangHoa;
-			const id = req.params.id;
+			const idHangHoa = +req.params.idHangHoa;
+			const id = +req.params.id;
 
 			const hinh = await HinhHHModel.findOneAndDelete({ id }, { returnOriginal: true });
 
-			fs.unlinkSync(path.resolve(__dirname, "../uploads/images", hinh.path.split("/")[2]));
-
 			await HangHoaModel.updateOne(
-				{ id: idHangHoa },
+				{
+					id: idHangHoa,
+				},
 				{
 					$pull: {
-						images: hinh,
+						images: { id },
 					},
-				}
+				},
+				{ returnOriginal: true }
 			);
+
+			if (hinh) {
+				fs.unlinkSync(path.resolve(__dirname, "../uploads/images", hinh.path.split("/")[2]));
+			}
 
 			return res.status(200).end();
 		} catch (error) {
+			console.log(error);
 			return res.status(400).json({ message: error.message });
 		}
 	}

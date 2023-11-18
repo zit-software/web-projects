@@ -10,10 +10,52 @@
           </RouterLink>
         </div>
 
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <ul class="pagination">
+            <li
+              class="page-item"
+              :class="{
+                disabled: isFirstPage
+              }"
+              @click="prevPage"
+            >
+              <a class="page-link" href="#" aria-label="Previous">
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              v-for="item in total"
+              :class="{ active: page === item }"
+              :key="item"
+              @click="page = item"
+            >
+              <a class="page-link" href="#">{{ item }}</a>
+            </li>
+            <li
+              class="page-item"
+              :class="{
+                disabled: isLastPage
+              }"
+              @click="nextPage"
+            >
+              <a class="page-link" href="#" aria-label="Next">
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+          </ul>
+
+          <select v-model="pageSize" class="form-select" style="width: 150px">
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+
         <span class="spinner-border" v-if="isLoading"></span>
         <div v-else class="table-container">
           <table class="table table-responsive">
-            <thead style="position: sticky; top: 0; z-index: 100">
+            <thead class="table-light" style="position: sticky; top: 0; z-index: 100">
               <tr>
                 <th>Id</th>
                 <th></th>
@@ -36,8 +78,8 @@
                     v-if="product.images[0]"
                     :src="fileService.getFileUrl(product.images[0].path)"
                     :alt="product.ten"
-                    width="200"
-                    height="200"
+                    width="100"
+                    height="100"
                     class="rounded"
                     style="object-fit: cover"
                     loading="lazy"
@@ -46,8 +88,8 @@
                     v-else
                     class="border rounded d-flex"
                     style="
-                      width: 200px;
-                      height: 200px;
+                      width: 100px;
+                      height: 100px;
                       justify-content: center;
                       align-items: center;
                     "
@@ -75,13 +117,14 @@
                   </RouterLink>
                 </td>
                 <td>
-                  <RouterLink
-                    :to="`/admin/products/${product.id}/delete`"
+                  <button
+                    type="button"
                     class="btn btn-danger btn-sm"
+                    @click="deleteProductPayload = product"
                   >
                     <i class="fa fa-trash"></i>
                     Xóa
-                  </RouterLink>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -104,30 +147,74 @@ export default {
   data() {
     const products = ref([])
     const isLoading = ref(false)
+    const pageSize = ref(50)
+    const total = ref([])
+    const page = ref(1)
+    const deleteProductPayload = ref(null)
 
-    return { products, isLoading, fileService }
+    return { products, isLoading, fileService, pageSize, total, page, deleteProductPayload }
   },
   methods: {
     async updateProductList() {
       try {
         this.isLoading = true
 
-        const res = await hanghoaService.getAll()
+        const res = await hanghoaService.getAll({ page: this.page, pageSize: this.pageSize })
 
         this.products = res.data
+        const totalPages = Math.ceil(res.totalRows / this.pageSize)
+        this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
       } catch (error) {
         this.$toast.error(error.message)
       } finally {
         this.isLoading = false
       }
     },
+    async deleteProduct() {
+      try {
+        await hanghoaService.deleteById(this.deleteProductPayload.id)
+        this.$toast.info(`Đã xóa hàng hóa ${this.deleteProductPayload.ten}`)
+        this.products = this.products.filter(
+          (product) => product.id !== this.deleteProductPayload.id
+        )
+        this.deleteProductPayload = null
+      } catch (error) {
+        this.$toast.error(error.message)
+      }
+    },
     vndFormat,
     dateFormat(date) {
       return dayjs(date).format('HH:mm, DD/MM/YYYY')
+    },
+    nextPage() {
+      if (this.page < this.total.length) {
+        this.page++
+      }
+    },
+    prevPage() {
+      if (this.page > 1) {
+        this.page--
+      }
     }
   },
   beforeMount() {
     this.updateProductList()
+  },
+  watch: {
+    pageSize() {
+      this.updateProductList()
+    },
+    page() {
+      this.updateProductList()
+    },
+    deleteProductPayload() {
+      if (!this.deleteProductPayload) return
+
+      const cf = window.confirm(`Bạn muốn xóa sản phẩm ${this.deleteProductPayload.ten}?`)
+      if (cf) {
+        this.deleteProduct()
+      }
+    }
   }
 }
 </script>

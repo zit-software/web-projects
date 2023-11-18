@@ -8,7 +8,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <Form
+        <vee-form
           :validation-schema="validationSchema"
           class="w-100"
           @submit="submit"
@@ -79,7 +79,7 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy Bỏ</button>
             <button type="submit" class="btn btn-primary">Lưu</button>
           </div>
-        </Form>
+        </vee-form>
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
 </style>
 <script>
 import authService from '@/services/auth.service'
-import { Form, Field, ErrorMessage } from 'vee-validate'
+import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 
 import * as yup from 'yup'
 const validationSchema = yup.object().shape({
@@ -106,7 +106,7 @@ const validationSchema = yup.object().shape({
 export default {
   name: 'ChangePasswordModal',
   components: {
-    Form,
+    VeeForm,
     Field,
     ErrorMessage
   },

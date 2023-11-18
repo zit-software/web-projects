@@ -133,7 +133,7 @@ export default {
         const res = await khachHangService.getAll({ pageSize: this.pageSize, page: this.page })
 
         this.customers = res.data
-        const totalPages = Math.floor(res.totalRows / this.pageSize + 0.9)
+        const totalPages = Math.ceil(res.totalRows / this.pageSize)
         this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
       } catch (error) {
         this.$toast.error(error.message)
