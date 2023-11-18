@@ -11,21 +11,31 @@ class HangHoaController {
 	 */
 	async laytatca(req, res) {
 		try {
-			const offset = req.query.offset || 0;
+			const page = req.query.page || 0;
 			const pageSize = req.query.pageSize || null;
 			const term = req.query.term || null;
 			const searchBy = req.query.searchBy || null;
+			const sortBy = req.query.sortBy || null;
+			const direction = req.query.direction || null;
 			const filter = {};
+			const sort = {};
+			if (sortBy) {
+				sort[sortBy] = direction;
+			}
 			if (term) {
 				filter[searchBy] = {
 					$regex: term,
 					$options: "i",
 				};
 			}
+			console.log(sort);
 			const allHangHoas = await HangHoaModel.find(filter, "", {
-				skip: offset,
-				limit: pageSize,
-			}).populate("images");
+				skip: (page - 1) * (pageSize || 0),
+				limit: !pageSize || page * pageSize,
+			})
+				.populate("images")
+				.sort(sort);
+
 			const totalRows = await HangHoaModel.count(filter);
 			return res.status(200).json({
 				totalRows,
