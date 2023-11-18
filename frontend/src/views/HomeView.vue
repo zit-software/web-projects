@@ -11,8 +11,20 @@
     </header>
     <!-- Section-->
     <section class="py-5">
-      <div class="container-fluid px-2 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-3 row-cols-md-4 row-cols-xl-5 justify-content-center">
+      <div class="container-fluid px-2 px-lg-5">
+        <div>
+          <div><h3 style="font-weight: bold">Danh Sách Sản Phẩm</h3></div>
+          <FilterComponent
+            v-model="filter"
+            title="Tìm kiếm sản phẩm"
+            :items="[
+              { name: 'ten', title: 'Tên' },
+              { name: 'mota', title: 'Mô tả' }
+            ]"
+          ></FilterComponent>
+        </div>
+
+        <div class="row gx-2 gx-lg-2 row-cols-3 row-cols-md-5 row-cols-xl-6">
           <div v-for="product in products" class="col mb-5">
             <div class="card h-100">
               <!-- Product image--><img
@@ -20,6 +32,7 @@
                 class="card-img-top"
                 :src="getImage(product.images[0].path)"
                 alt="..."
+                style="aspect-ratio: 1; object-fit: cover"
               />
               <!-- Product details-->
               <div class="card-body p-4">
@@ -33,7 +46,9 @@
               <!-- Product actions-->
               <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">
-                  <a class="btn btn-outline-dark mt-auto" href="#">View options</a>
+                  <RouterLink :to="`/products/${product.id}`">
+                    <a class="btn btn-outline-dark mt-auto" href="#">Xem chi tiết</a>
+                  </RouterLink>
                 </div>
               </div>
             </div>
@@ -92,15 +107,20 @@
 import hanghoaService from '@/services/hanghoa.service'
 import fileService from '@/services/file.service'
 import vndFormat from '@/utils/vndFormat'
+import FilterComponent from '@/components/FilterComponent.vue'
 import { ref } from 'vue'
 
 export default {
   name: 'HomeView',
+  components: {
+    FilterComponent
+  },
   data() {
     const products = ref([])
     const pageSize = ref(5)
     const total = ref([])
     const page = ref(1)
+    const filter = ref({ searchBy: 'ten', term: '' })
     const isLoading = ref(false)
 
     return {
@@ -108,7 +128,8 @@ export default {
       pageSize,
       total,
       page,
-      isLoading
+      isLoading,
+      filter
     }
   },
   beforeMount() {
@@ -120,6 +141,9 @@ export default {
     },
     page() {
       this.updateProductList()
+    },
+    filter(value) {
+      this.updateProductList()
     }
   },
   methods: {
@@ -127,7 +151,11 @@ export default {
       try {
         this.isLoading = true
 
-        const res = await hanghoaService.getAll({ page: this.page, pageSize: this.pageSize })
+        const res = await hanghoaService.getAll({
+          page: this.page,
+          pageSize: this.pageSize,
+          ...this.filter
+        })
 
         this.products = res.data
         const totalPages = Math.ceil(res.totalRows / this.pageSize)

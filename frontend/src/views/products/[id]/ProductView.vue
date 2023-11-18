@@ -53,10 +53,14 @@
             min="1"
             :max="product.soluong"
           />
-          <button class="btn btn-secondary">
+          <button @click="addToCart" class="btn btn-secondary">
             <i class="fa fa-cart-plus"> </i>
           </button>
           <button class="btn btn-primary">Mua</button>
+        </div>
+        <div v-if="cartItem">
+          Đã có <span style="font-weight: bold">{{ cartItem.soluong }}</span> sản phẩm này trong giỏ
+          hàng
         </div>
       </div>
     </div>
@@ -66,8 +70,11 @@
 <script>
 import fileService from '@/services/file.service'
 import hanghoaService from '@/services/hanghoa.service'
+import { useCartStore } from '@/stores/cart'
 import vndFormat from '@/utils/vndFormat'
 import { ref } from 'vue'
+
+const cartStore = useCartStore()
 
 export default {
   name: 'ProductView',
@@ -75,8 +82,18 @@ export default {
     const product = ref(null)
     const imgIndex = ref(0)
     const quantity = ref(1)
-
-    return { product, fileService, imgIndex, quantity }
+    const cartItem = ref(null)
+    return { product, fileService, imgIndex, quantity, cartItem }
+  },
+  watch: {
+    product(value) {
+      if (!value) return
+      this.cartItem = cartStore.getItemById(value.id)
+    },
+    cartStore() {
+      if (!this.product) return
+      this.cartItem = cartStore.getItemById(this.product.id)
+    }
   },
   methods: {
     async getProductData() {
@@ -88,6 +105,14 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    addToCart() {
+      cartStore.addToCart({
+        id: this.product.id,
+        soluong: this.quantity
+      })
+      this.cartItem = cartStore.getItemById(this.product.id)
+      this.$toast.success('Thêm vào giỏ hàng thành công!', { position: 'top-right' })
     },
     vndFormat
   },
