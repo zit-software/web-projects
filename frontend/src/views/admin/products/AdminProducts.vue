@@ -75,20 +75,49 @@
           v-model="filter"
         />
 
-        <span class="spinner-border" v-if="isLoading"></span>
-        <div v-else class="table-container">
+        <div class="table-container">
           <table class="table table-responsive">
             <thead class="table-light" style="position: sticky; top: 0; z-index: 100">
               <tr>
-                <th>Id</th>
+                <th @click="setSortBy('id')" style="cursor: pointer">
+                  Id
+                  <SortDirection v-if="sortBy === 'id'" :direction="direction" />
+                </th>
+
                 <th></th>
-                <th>Tên mặt hàng</th>
-                <th>Mô tả</th>
-                <th>Giá</th>
-                <th>Còn lại</th>
-                <th>Ngày tạo</th>
-                <th>Cập nhật</th>
+
+                <th @click="setSortBy('ten')" style="cursor: pointer">
+                  Tên mặt hàng
+                  <SortDirection v-if="sortBy === 'ten'" :direction="direction" />
+                </th>
+
+                <th @click="setSortBy('mota')" style="cursor: pointer">
+                  Mô tả
+                  <SortDirection v-if="sortBy === 'mota'" :direction="direction" />
+                </th>
+
+                <th @click="setSortBy('gia')" style="cursor: pointer">
+                  Giá
+                  <SortDirection v-if="sortBy === 'gia'" :direction="direction" />
+                </th>
+
+                <th @click="setSortBy('soluong')" style="cursor: pointer">
+                  Số lượng còn lại
+                  <SortDirection v-if="sortBy === 'soluong'" :direction="direction" />
+                </th>
+
+                <th @click="setSortBy('createdAt')" style="cursor: pointer">
+                  Tạo vào
+                  <SortDirection v-if="sortBy === 'createdAt'" :direction="direction" />
+                </th>
+
+                <th @click="setSortBy('updatedAt')" style="cursor: pointer">
+                  Cập nhật
+                  <SortDirection v-if="sortBy === 'updatedAt'" :direction="direction" />
+                </th>
+
                 <th></th>
+
                 <th></th>
               </tr>
             </thead>
@@ -153,6 +182,7 @@
             </tbody>
           </table>
         </div>
+        <span class="spinner-border" v-if="isLoading"></span>
       </div>
     </div>
   </div>
@@ -160,6 +190,7 @@
 
 <script>
 import FilterComponent from '@/components/FilterComponent.vue'
+import SortDirection from '@/components/SortDirection.vue'
 import fileService from '@/services/file.service'
 import hanghoaService from '@/services/hanghoa.service'
 import vndFormat from '@/utils/vndFormat'
@@ -180,6 +211,8 @@ export default {
       searchBy: 'ten',
       term: ''
     })
+    const sortBy = ref('id')
+    const direction = ref(1)
 
     return {
       products,
@@ -190,7 +223,9 @@ export default {
       page,
       deleteProductPayload,
       isOpenFilter,
-      filter
+      filter,
+      sortBy,
+      direction
     }
   },
   methods: {
@@ -199,7 +234,9 @@ export default {
         this.isLoading = true
         const params = {
           pageSize: this.pageSize,
-          page: this.page
+          page: this.page,
+          sortBy: this.sortBy,
+          direction: this.direction
         }
         if (this.isOpenFilter) {
           params.searchBy = this.filter.searchBy
@@ -240,6 +277,14 @@ export default {
       if (this.page > 1) {
         this.page--
       }
+    },
+    setSortBy(sortBy) {
+      if (this.sortBy === sortBy) {
+        this.direction *= -1
+      } else {
+        this.sortBy = sortBy
+        this.direction = 1
+      }
     }
   },
   beforeMount() {
@@ -264,9 +309,15 @@ export default {
     },
     filter() {
       this.updateProductList()
+    },
+    sortBy() {
+      this.updateProductList()
+    },
+    direction() {
+      this.updateProductList()
     }
   },
-  components: { FilterComponent }
+  components: { FilterComponent, SortDirection }
 }
 </script>
 
@@ -274,5 +325,9 @@ export default {
 .table-container {
   max-height: 70vh;
   overflow: auto;
+}
+
+th {
+  white-space: nowrap;
 }
 </style>
