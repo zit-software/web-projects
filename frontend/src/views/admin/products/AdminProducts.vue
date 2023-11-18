@@ -63,23 +63,17 @@
           </div>
         </div>
 
-        <div class="card border mb-2" v-if="isOpenFilter">
-          <h5 class="card-header">Lọc sản phẩm</h5>
-
-          <div class="card-body">
-            <div class="mb-3">
-              <label class="form-label"> Tìm kiếm theo </label>
-              <select class="form-select" v-model="searchBy">
-                <option value="ten">Tên mặt hàng</option>
-                <option value="mota">Mô tả</option>
-                <option value="gia">Giá</option>
-                <option value="soluong">Số lượng</option>
-              </select>
-            </div>
-
-            <input type="text" placeholder="Từ khóa" class="form-control" v-model="term" />
-          </div>
-        </div>
+        <FilterComponent
+          v-if="isOpenFilter"
+          title="Tìm kiếm hàng hóa"
+          :items="[
+            { name: 'ten', title: 'Tên mặt hàng' },
+            { name: 'mota', title: 'Mô tả' },
+            { name: 'gia', title: 'Giá' },
+            { name: 'soluong', title: 'Số lượng' }
+          ]"
+          v-model="filter"
+        />
 
         <span class="spinner-border" v-if="isLoading"></span>
         <div v-else class="table-container">
@@ -165,6 +159,7 @@
 </template>
 
 <script>
+import FilterComponent from '@/components/FilterComponent.vue'
 import fileService from '@/services/file.service'
 import hanghoaService from '@/services/hanghoa.service'
 import vndFormat from '@/utils/vndFormat'
@@ -181,8 +176,10 @@ export default {
     const page = ref(1)
     const deleteProductPayload = ref(null)
     const isOpenFilter = ref(false)
-    const searchBy = ref('ten')
-    const term = ref('')
+    const filter = ref({
+      searchBy: 'ten',
+      term: ''
+    })
 
     return {
       products,
@@ -193,27 +190,22 @@ export default {
       page,
       deleteProductPayload,
       isOpenFilter,
-      searchBy,
-      term
+      filter
     }
   },
   methods: {
     async updateProductList() {
       try {
         this.isLoading = true
-
         const params = {
           pageSize: this.pageSize,
           page: this.page
         }
-
         if (this.isOpenFilter) {
-          params.searchBy = this.searchBy
-          params.term = this.term
+          params.searchBy = this.filter.searchBy
+          params.term = this.filter.term
         }
-
         const res = await hanghoaService.getAll(params)
-
         this.products = res.data
         const totalPages = Math.ceil(res.totalRows / this.pageSize)
         this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -262,7 +254,6 @@ export default {
     },
     deleteProductPayload() {
       if (!this.deleteProductPayload) return
-
       const cf = window.confirm(`Bạn muốn xóa sản phẩm ${this.deleteProductPayload.ten}?`)
       if (cf) {
         this.deleteProduct()
@@ -271,13 +262,11 @@ export default {
     isOpenFilter() {
       this.updateProductList()
     },
-    searchBy() {
-      this.updateProductList()
-    },
-    term() {
+    filter() {
       this.updateProductList()
     }
-  }
+  },
+  components: { FilterComponent }
 }
 </script>
 

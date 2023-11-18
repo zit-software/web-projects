@@ -55,22 +55,16 @@
       </div>
     </div>
 
-    <div class="card border mb-2" v-if="isOpenFilter">
-      <h5 class="card-header">Lọc khách hàng</h5>
-
-      <div class="card-body">
-        <div class="mb-3">
-          <label class="form-label"> Tìm kiếm theo </label>
-          <select class="form-select" v-model="searchBy">
-            <option value="ten">Họ tên</option>
-            <option value="sdt">Số điện thoại</option>
-            <option value="diachi">Địa chỉ</option>
-          </select>
-        </div>
-
-        <input type="text" placeholder="Từ khóa" class="form-control" v-model="term" />
-      </div>
-    </div>
+    <FilterComponent
+      v-if="isOpenFilter"
+      title="Tìm khách hàng"
+      :items="[
+        { name: 'ten', title: 'Họ tên' },
+        { name: 'sdt', title: 'Số điện thoại' },
+        { name: 'diachi', title: 'Địa chỉ' }
+      ]"
+      v-model="filter"
+    />
 
     <div class="spinner-border" v-if="isLoading"></div>
 
@@ -126,6 +120,7 @@
 import { ref } from 'vue'
 import khachHangService from '@/services/khachhang.service'
 import dayjs from 'dayjs'
+import FilterComponent from '@/components/FilterComponent.vue'
 
 export default {
   name: 'AdminCustomers',
@@ -136,8 +131,9 @@ export default {
     const page = ref(1)
     const isLoading = ref(false)
     const isOpenFilter = ref(false)
-    const searchBy = ref('ten')
-    const term = ref('')
+    const filter = ref({
+      searchBy: 'ten'
+    })
 
     return {
       customers,
@@ -146,18 +142,15 @@ export default {
       page,
       isLoading,
       isOpenFilter,
-      searchBy,
-      term
+      filter
     }
   },
   beforeMount() {
     this.updateCustomerList()
-
     this.$watch('pageSize', this.updateCustomerList)
     this.$watch('page', this.updateCustomerList)
     this.$watch('isOpenFilter', this.updateCustomerList)
-    this.$watch('searchBy', this.updateCustomerList)
-    this.$watch('term', this.updateCustomerList)
+    this.$watch('filter', this.updateCustomerList)
   },
   methods: {
     formatDate(date) {
@@ -166,19 +159,15 @@ export default {
     async updateCustomerList() {
       try {
         this.isLoading = true
-
         const params = {
           pageSize: this.pageSize,
           page: this.page
         }
-
         if (this.isOpenFilter) {
-          params.searchBy = this.searchBy
-          params.term = this.term
+          params.searchBy = this.filter.searchBy
+          params.term = this.filter.term
         }
-
         const res = await khachHangService.getAll(params)
-
         this.customers = res.data
         const totalPages = Math.ceil(res.totalRows / this.pageSize)
         this.total = Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -206,7 +195,8 @@ export default {
     isLastPage() {
       return this.page === this.total.length
     }
-  }
+  },
+  components: { FilterComponent }
 }
 </script>
 
