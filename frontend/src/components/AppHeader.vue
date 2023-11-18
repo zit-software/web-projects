@@ -7,8 +7,8 @@
   </div>
   <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
-      <a class="navbar-brand" href="#!">Shopping</a
-      ><button
+      <RouterLink class="navbar-brand" to="/">Shopping</RouterLink>
+      <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
