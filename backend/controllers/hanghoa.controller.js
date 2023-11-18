@@ -199,6 +199,29 @@ class HangHoaController {
 			});
 		}
 	}
+
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 */
+	async getByIds(req, res) {
+		try {
+			const ids = req.params.ids.split(",");
+
+			const hanghoa = await HangHoaModel.find({
+				id: {
+					$in: ids,
+				},
+			});
+
+			res.status(200).json(hanghoa);
+		} catch (error) {
+			res.status(400).send({
+				message: error.message,
+			});
+		}
+	}
 }
 
 module.exports = new HangHoaController();
