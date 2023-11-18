@@ -1,6 +1,10 @@
 <template>
   <nav>
-    <h2>ADMIN CP</h2>
+    <button class="btn">ADMIN CP</button>
+    <RouterLink to="/" class="btn btn-secondary">
+      <i class="fa fa-globe"></i>
+      Xem trang web
+    </RouterLink>
   </nav>
 </template>
 
@@ -12,13 +16,8 @@ export default {
 
 <style scoped>
 nav {
-  padding: 15px 20px;
+  padding: 5px 20px;
   border-bottom: 1px solid #ddd;
   background: #fdfdfd;
-}
-
-h2 {
-  font-size: 12px;
-  margin: 0;
 }
 </style>

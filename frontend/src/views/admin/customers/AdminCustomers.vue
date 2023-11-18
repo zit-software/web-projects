@@ -37,11 +37,39 @@
         </li>
       </ul>
 
-      <select v-model="pageSize" class="form-select" style="width: 150px">
-        <option value="10">10</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
+      <div class="d-flex gap-1">
+        <select v-model="pageSize" class="form-select" style="width: 150px">
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          :class="{ 'btn-warning': isOpenFilter }"
+          @click="isOpenFilter = !isOpenFilter"
+        >
+          <i class="fa fa-filter"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="card border mb-2" v-if="isOpenFilter">
+      <h5 class="card-header">Lọc khách hàng</h5>
+
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label"> Tìm kiếm theo </label>
+          <select class="form-select" v-model="searchBy">
+            <option value="ten">Họ tên</option>
+            <option value="sdt">Số điện thoại</option>
+            <option value="diachi">Địa chỉ</option>
+          </select>
+        </div>
+
+        <input type="text" placeholder="Từ khóa" class="form-control" v-model="term" />
+      </div>
     </div>
 
     <div class="spinner-border" v-if="isLoading"></div>
@@ -107,13 +135,19 @@ export default {
     const total = ref([])
     const page = ref(1)
     const isLoading = ref(false)
+    const isOpenFilter = ref(false)
+    const searchBy = ref('ten')
+    const term = ref('')
 
     return {
       customers,
       pageSize,
       total,
       page,
-      isLoading
+      isLoading,
+      isOpenFilter,
+      searchBy,
+      term
     }
   },
   beforeMount() {
@@ -121,6 +155,9 @@ export default {
 
     this.$watch('pageSize', this.updateCustomerList)
     this.$watch('page', this.updateCustomerList)
+    this.$watch('isOpenFilter', this.updateCustomerList)
+    this.$watch('searchBy', this.updateCustomerList)
+    this.$watch('term', this.updateCustomerList)
   },
   methods: {
     formatDate(date) {
@@ -130,7 +167,17 @@ export default {
       try {
         this.isLoading = true
 
-        const res = await khachHangService.getAll({ pageSize: this.pageSize, page: this.page })
+        const params = {
+          pageSize: this.pageSize,
+          page: this.page
+        }
+
+        if (this.isOpenFilter) {
+          params.searchBy = this.searchBy
+          params.term = this.term
+        }
+
+        const res = await khachHangService.getAll(params)
 
         this.customers = res.data
         const totalPages = Math.ceil(res.totalRows / this.pageSize)

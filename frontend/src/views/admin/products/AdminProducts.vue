@@ -45,11 +45,40 @@
             </li>
           </ul>
 
-          <select v-model="pageSize" class="form-select" style="width: 150px">
-            <option value="10">10</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
+          <div class="d-flex gap-1">
+            <select v-model="pageSize" class="form-select" style="width: 150px">
+              <option value="10">10</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              :class="{ 'btn-warning': isOpenFilter }"
+              @click="isOpenFilter = !isOpenFilter"
+            >
+              <i class="fa fa-filter"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="card border mb-2" v-if="isOpenFilter">
+          <h5 class="card-header">Lọc sản phẩm</h5>
+
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label"> Tìm kiếm theo </label>
+              <select class="form-select" v-model="searchBy">
+                <option value="ten">Tên mặt hàng</option>
+                <option value="mota">Mô tả</option>
+                <option value="gia">Giá</option>
+                <option value="soluong">Số lượng</option>
+              </select>
+            </div>
+
+            <input type="text" placeholder="Từ khóa" class="form-control" v-model="term" />
+          </div>
         </div>
 
         <span class="spinner-border" v-if="isLoading"></span>
@@ -151,15 +180,39 @@ export default {
     const total = ref([])
     const page = ref(1)
     const deleteProductPayload = ref(null)
+    const isOpenFilter = ref(false)
+    const searchBy = ref('ten')
+    const term = ref('')
 
-    return { products, isLoading, fileService, pageSize, total, page, deleteProductPayload }
+    return {
+      products,
+      isLoading,
+      fileService,
+      pageSize,
+      total,
+      page,
+      deleteProductPayload,
+      isOpenFilter,
+      searchBy,
+      term
+    }
   },
   methods: {
     async updateProductList() {
       try {
         this.isLoading = true
 
-        const res = await hanghoaService.getAll({ page: this.page, pageSize: this.pageSize })
+        const params = {
+          pageSize: this.pageSize,
+          page: this.page
+        }
+
+        if (this.isOpenFilter) {
+          params.searchBy = this.searchBy
+          params.term = this.term
+        }
+
+        const res = await hanghoaService.getAll(params)
 
         this.products = res.data
         const totalPages = Math.ceil(res.totalRows / this.pageSize)
@@ -214,6 +267,15 @@ export default {
       if (cf) {
         this.deleteProduct()
       }
+    },
+    isOpenFilter() {
+      this.updateProductList()
+    },
+    searchBy() {
+      this.updateProductList()
+    },
+    term() {
+      this.updateProductList()
     }
   }
 }
