@@ -154,12 +154,13 @@ export default {
     },
     vndFormat,
     removeFromCart(id) {
-      console.log(id)
       cartStore.removeFromCart(id)
 
       this.cart = this.cart.filter((item) => {
-        const hh = this.hhMap.get(item.id)
         return item.id !== id
+      })
+      this.$toast.info('Giỏ hàng còn lại: ' + cartStore.cart.length || 0, {
+        position: 'top-right'
       })
     }
   },
@@ -182,11 +183,9 @@ export default {
     const cart = ref(cartStore.cart)
     const user = ref(userStore.user)
     const hhMap = ref(new Map())
-    const chitiets = ref(null)
     return {
       cart,
       user,
-      chitiets,
       hhMap
     }
   }

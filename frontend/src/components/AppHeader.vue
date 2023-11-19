@@ -118,7 +118,8 @@ export default {
   watch: {
     cartStore() {
       this.cart = cartStore.cart
-    }
+    },
+    cart() {}
   },
   methods: {
     toggleModal(event) {
@@ -149,7 +150,8 @@ export default {
       return this.userStore.isAdmin()
     },
     numberOfItem() {
-      return this.cart ? this.cart.length : 0
+      console.log(this.cartStore.cart)
+      return this.cartStore.cart ? this.cartStore.cart.length : 0
     }
   },
   mounted() {
