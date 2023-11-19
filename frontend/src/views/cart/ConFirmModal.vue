@@ -63,7 +63,7 @@ export default {
     async placeOrder() {
       try {
         if (!this.chitietsProp || this.chitietsProp.length == 0) {
-          this.$toast.error('Bạn chưa thêm gì vào giỏ!', { position: 'top-right' })
+          this.$toast.error('Bạn chưa thêm gì vào giỏ!', {})
           return
         }
         await dathangService.placeOrder({
@@ -83,7 +83,7 @@ export default {
         const closeButton = document.querySelector('button[data-bs-dismiss=modal]')
         closeButton.click()
       } catch (error) {
-        this.$toast.error(error.message, { position: 'top-right' })
+        this.$toast.error(error.message, {})
       }
     }
   }

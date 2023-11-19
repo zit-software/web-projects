@@ -159,9 +159,7 @@ export default {
       this.cart = this.cart.filter((item) => {
         return item.id !== id
       })
-      this.$toast.info('Giỏ hàng còn lại: ' + cartStore.cart.length || 0, {
-        position: 'top-right'
-      })
+      this.$toast.info('Giỏ hàng còn lại: ' + cartStore.cart.length || 0, {})
     },
     back() {
       window.history.back()
