@@ -35,6 +35,10 @@ npm run dev
 npm run start
 ```
 
+### Import Data (JSON)
+
+Go to /data folder, cd into the web you are using. Then import it into the database (MongoFB Compass)
+
 ### Create an staff (admin) account
 
 ```sh
