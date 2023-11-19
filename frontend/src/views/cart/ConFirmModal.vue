@@ -67,16 +67,20 @@ export default {
           return
         }
         await dathangService.placeOrder({
-          chitiets: this.chitietsProp.map((chitiet) => ({
-            mahh: chitiet._id,
-            soluong: chitiet.soluong
-          }))
+          chitiets: this.chitietsProp.map((chitiet) => {
+            const hh = this.hhMap.get(chitiet.id)
+            return {
+              mahh: hh._id,
+              soluong: chitiet.soluong
+            }
+          })
         })
         this.$toast.success('Đặt hàng thành công', {
           position: 'top-right',
           duration: 3000
         })
         cartStore.clearCart()
+        window.location.reload()
         const closeButton = document.querySelector('button[data-bs-dismiss=modal]')
         closeButton.click()
       } catch (error) {

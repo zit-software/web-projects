@@ -23,12 +23,20 @@ const DatHang = new mongoose.Schema(
 		kh: {
 			type: mongoose.ObjectId,
 			ref: "KhachHang",
+			require: true,
 		},
 		nv: {
 			type: mongoose.ObjectId,
 			ref: "NhanVien",
 			require: false,
 		},
+		chitiets: [
+			{
+				type: mongoose.ObjectId,
+				ref: "ChiTietDatHang",
+				default: [],
+			},
+		],
 		isDeleted: {
 			type: Boolean,
 			required: true,

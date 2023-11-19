@@ -58,7 +58,7 @@
             </div>
           </div>
           <FilterComponent
-            class="animate__animated animate__fadeIn filter-component"
+            class="animate__animated animate__faster animate__fadeInDown filter-component"
             v-if="isSearching"
             v-model="filter"
             title="Tìm kiếm sản phẩm"
@@ -112,7 +112,7 @@
               }"
               @click="prevPage"
             >
-              <a style="z-index: unset" class="page-link" href="#" aria-label="Previous">
+              <a class="page-link" href="#" aria-label="Previous">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -123,7 +123,7 @@
               :key="item"
               @click="page = item"
             >
-              <a class="page-link" href="#">{{ item }}</a>
+              <a style="z-index: 0" class="page-link" href="#">{{ item }}</a>
             </li>
             <li
               class="page-item"
@@ -245,10 +245,10 @@ export default {
     async toggleSearchingPanel() {
       if (this.isSearching) {
         const panel = document.querySelector('.filter-component')
-        panel.classList.add('animate__fadeOut')
+        panel.classList.add('animate__fadeOutUp')
         setTimeout(() => {
           this.isSearching = !this.isSearching
-          panel.classList.remove('animate__fadeOut')
+          panel.classList.remove('animate__fadeOutUp')
         }, 800)
         return
       }

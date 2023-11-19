@@ -75,7 +75,7 @@
       </div>
       <div class="row justify-content-end flex-row mb-5">
         <div class="button-container">
-          <button type="button" class="btn btn-dark">
+          <button @click="back" type="button" class="btn btn-dark">
             <i class="fa-solid fa-house"></i>
             Trở lại
           </button>
@@ -162,6 +162,9 @@ export default {
       this.$toast.info('Giỏ hàng còn lại: ' + cartStore.cart.length || 0, {
         position: 'top-right'
       })
+    },
+    back() {
+      window.history.back()
     }
   },
 

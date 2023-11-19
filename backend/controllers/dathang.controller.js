@@ -1,5 +1,6 @@
 const DatHangModel = require("~/models/dathang.model").model;
 const HangHoaModel = require("~/models/hanghoa.model").model;
+const KhachHangModel = require("~/models/khachhang.model").model;
 const ChiTietDatHangModel = require("~/models/chitietdathang.model").model;
 class DatHangController {
 	/**
@@ -10,7 +11,7 @@ class DatHangController {
 	 */
 	async laytatca(req, res) {
 		try {
-			const offset = req.query.offset || 0;
+			const page = req.query.page || 1;
 			const pageSize = req.query.pageSize || null;
 			const term = req.query.term || null;
 			const searchBy = req.query.searchBy || null;
@@ -21,13 +22,33 @@ class DatHangController {
 					$options: "i",
 				};
 			}
+
+			if (searchBy?.startsWith("kh.") && term) {
+				const filterKhachHang = searchBy.split(".")[1];
+				const khachs = await KhachHangModel.find({ [filterKhachHang]: { $regex: term, $options: "i" } });
+				const khachIds = khachs.map((kh) => kh._id);
+				delete filter[searchBy];
+				filter.kh = { $in: khachIds };
+			}
+			console.log(filter);
 			const allDatHangs = await DatHangModel.find(filter, "", {
-				skip: offset,
-				limit: pageSize,
+				skip: (page - 1) * (pageSize || 0),
+				limit: !pageSize || page * pageSize,
+				populate: [
+					{
+						path: "kh",
+						select: "ten diachi",
+					},
+					{
+						path: "nv",
+						select: "ten",
+					},
+				],
 			});
+
 			const totalRows = await DatHangModel.count(filter);
 			return res.status(200).json({
-				totalRows,
+				total: totalRows,
 				data: allDatHangs,
 			});
 		} catch (error) {
@@ -43,13 +64,29 @@ class DatHangController {
 	async laymot(req, res) {
 		try {
 			const id = req.params.id;
-			const dathang = await DatHangModel.findById(id);
+			const dathang = await DatHangModel.findById(id)
+				.populate("kh", "ten diachi sdt")
+				.populate("nv", "ten diachi sdt")
+				.populate({
+					path: "chitiets",
+					model: "ChiTietDatHang",
+					populate: {
+						path: "hanghoa",
+						model: "HangHoa",
+						select: "ten gia soluong images",
+					},
+				});
 			if (!dathang) {
 				return res.status(404).json({
 					message: "Không tìm thấy đơn hàng",
 				});
 			}
-			return res.status(200).json(dathang);
+			console.log(dathang);
+			const tongtien = dathang.chitiets.reduce((acc, chitiet) => {
+				return acc + chitiet.gia * chitiet.soluong;
+			}, 0);
+			dathang.tongtien = tongtien;
+			return res.status(200).json({ data: dathang, tongtien });
 		} catch (error) {
 			return res.status(400).send({ message: error.message });
 		}
@@ -89,7 +126,9 @@ class DatHangController {
 				}
 			}
 			// Persist Data
-			const savedDatHang = await newDatHang.save();
+			const savedDatHang = (await newDatHang.save()).toObject();
+			console.log(savedDatHang);
+			const chiTietRecords = [];
 			for (const chitiet of chitiets) {
 				const hanghoa = hhMap.get(chitiet.mahh);
 				const newChiTietDatHang = new ChiTietDatHangModel({
@@ -98,13 +137,20 @@ class DatHangController {
 					dh: savedDatHang._id,
 					hanghoa: hanghoa._id,
 				});
-				await newChiTietDatHang.save();
+				const newChiTiet = await newChiTietDatHang.save();
+				chiTietRecords.push(newChiTiet);
 				await HangHoaModel.findByIdAndUpdate(chitiet.mahh, {
 					$inc: {
 						soluong: -chitiet.soluong,
 					},
 				});
 			}
+			await DatHangModel.findByIdAndUpdate(savedDatHang._id, {
+				$push: {
+					chitiets: chiTietRecords,
+				},
+			});
+
 			return res.status(200).json({ message: "Đặt hàng thành công" });
 		} catch (error) {
 			return res.status(400).send({ message: error.message });

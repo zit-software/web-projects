@@ -11,6 +11,10 @@ const ChiTietDatHang = new mongoose.Schema(
 			type: mongoose.ObjectId,
 			ref: "DatHang",
 		},
+		hanghoa: {
+			type: mongoose.ObjectId,
+			ref: "HangHoa",
+		},
 		soluong: {
 			type: Number,
 			required: true,
@@ -22,6 +26,7 @@ const ChiTietDatHang = new mongoose.Schema(
 		giamgia: {
 			type: Number,
 		},
+
 		isDeleted: {
 			type: Boolean,
 			required: true,
