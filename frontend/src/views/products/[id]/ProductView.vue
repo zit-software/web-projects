@@ -137,7 +137,7 @@ export default {
         soluong: this.quantity
       })
       this.cartItem = cartStore.getItemById(this.product.id)
-      this.$toast.success('Thêm vào giỏ hàng thành công!', { position: 'top-right' })
+      this.$toast.success('Thêm vào giỏ hàng thành công!', {})
     },
     vndFormat,
     async getOtherProducts() {
