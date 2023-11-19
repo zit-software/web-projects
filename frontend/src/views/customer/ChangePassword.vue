@@ -85,11 +85,6 @@
   </div>
 </template>
 
-<style>
-.modal {
-  z-index: 99999;
-}
-</style>
 <script>
 import authService from '@/services/auth.service'
 import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'

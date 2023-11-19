@@ -79,6 +79,7 @@ class AuthController {
 			const isValidPassword = await PasswordUtil.compare(password, user.password);
 			if (!isValidPassword) throw new Error("Mật khẩu bị sai");
 			// Mật khẩu và tài khoản đúng
+			console.log(user);
 			const accessToken = TokenUtil.sign(user);
 			return res.status(200).json({ accessToken });
 		} catch (error) {

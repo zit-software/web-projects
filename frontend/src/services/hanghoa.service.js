@@ -44,6 +44,10 @@ class HangHoaService {
   async deleteImage(id, imageId) {
     return await this.#client.delete(`/${id}/hinh/${imageId}`)
   }
+  async getMultipleProducts(listIds) {
+    const param = listIds.join(',')
+    return await this.#client.get(`/ids/${listIds}`)
+  }
 }
 
 export default new HangHoaService()

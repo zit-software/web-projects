@@ -83,7 +83,7 @@
           </tr>
         </thead>
 
-        <tbody>
+        <tbody v-auto-animate>
           <tr v-for="customer in customers" :key="customer.id">
             <td>{{ customer.id }}</td>
             <td>{{ customer.ten }}</td>

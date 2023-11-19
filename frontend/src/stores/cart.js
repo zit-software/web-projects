@@ -21,11 +21,16 @@ export const useCartStore = defineStore('cart', () => {
     window.localStorage.setItem('cart', JSON.stringify(cart.value))
   }
 
-  const removeFromCart = (index) => {
-    cart.value = cart.value.filter((item, i) => i !== index)
+  const removeFromCart = (id) => {
+    cart.value = cart.value.filter((item) => item.id !== id)
+    window.localStorage.setItem('cart', JSON.stringify(cart.value))
+  }
+  const clearCart = () => {
+    cart.value = []
+    window.localStorage.setItem('cart', JSON.stringify([]))
   }
 
   const getItemById = (id) => cart.value.find((item) => item.id === id)
 
-  return { cart, addToCart, removeFromCart, getItemById }
+  return { cart, addToCart, removeFromCart, getItemById, clearCart }
 })

@@ -13,7 +13,7 @@ const DatHang = new mongoose.Schema(
 		},
 		ngayGH: {
 			type: Date,
-			required: true,
+			required: false,
 		},
 		trangThaiDH: {
 			type: String,

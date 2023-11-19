@@ -105,6 +105,7 @@ class DatHangController {
 					},
 				});
 			}
+			return res.status(200).json({ message: "Đặt hàng thành công" });
 		} catch (error) {
 			return res.status(400).send({ message: error.message });
 		}

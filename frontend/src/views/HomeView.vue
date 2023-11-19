@@ -13,8 +13,53 @@
     <section class="py-5">
       <div class="container-fluid px-2 px-lg-5">
         <div>
-          <div><h3 style="font-weight: bold">Danh Sách Sản Phẩm</h3></div>
+          <div class="d-flex align-items-end mb-2">
+            <h3 style="font-weight: bold">Danh Sách Sản Phẩm</h3>
+            <div style="max-width: 500px; margin-left: 32px" class="d-flex align-items-end">
+              <div class="me-3">
+                <button
+                  @click="toggleSearchingPanel"
+                  class="btn btn-primary"
+                  :class="{ 'btn-warning': isSearching }"
+                >
+                  <i class="fa-solid fa-filter"></i>
+                </button>
+              </div>
+              <div style="width: 250px">
+                <label>Sắp xếp theo</label>
+                <select
+                  required
+                  placeholder="Chon trường sắp xếp"
+                  class="form-select"
+                  v-model="sortBy"
+                >
+                  <option value="" disabled selected>Chọn trường để sắp xếp</option>
+                  <option value="gia">Giá</option>
+                  <option value="ten">Tên</option>
+                  <option value="createdAt">Ngày tạo</option>
+                </select>
+              </div>
+              <div
+                @click="toggleDirection"
+                style="margin-top: 20px; margin-left: 8px"
+                v-if="direction === 1"
+              >
+                <i class="fa-solid fa-sort-up"></i>
+                Tăng dần (A-Z, 0-9)
+              </div>
+              <div
+                @click="toggleDirection"
+                style="margin-top: 20px; margin-left: 8px"
+                v-if="direction === -1"
+              >
+                <i class="fa-solid fa-sort-down"></i>
+                Giảm dần (Z-A, 9-0)
+              </div>
+            </div>
+          </div>
           <FilterComponent
+            class="animate__animated animate__fadeIn filter-component"
+            v-if="isSearching"
             v-model="filter"
             title="Tìm kiếm sản phẩm"
             :items="[
@@ -24,8 +69,12 @@
           ></FilterComponent>
         </div>
 
-        <div class="row gx-2 gx-lg-2 row-cols-3 row-cols-md-5 row-cols-xl-6">
-          <div v-for="product in products" class="col mb-5">
+        <div
+          v-auto-animate
+          id="product-list-container"
+          class="row gx-2 gx-lg-2 row-cols-3 row-cols-md-5 row-cols-xl-6"
+        >
+          <div v-for="product in products" class="col mb-5" :key="product.id">
             <div class="card h-100">
               <!-- Product image--><img
                 v-if="product.images.length > 0"
@@ -63,7 +112,7 @@
               }"
               @click="prevPage"
             >
-              <a class="page-link" href="#" aria-label="Previous">
+              <a style="z-index: unset" class="page-link" href="#" aria-label="Previous">
                 <i class="fa fa-angle-left"></i>
               </a>
             </li>
@@ -99,10 +148,6 @@
     </section>
   </main>
 </template>
-<style>
-.card {
-}
-</style>
 <script>
 import hanghoaService from '@/services/hanghoa.service'
 import fileService from '@/services/file.service'
@@ -122,6 +167,9 @@ export default {
     const page = ref(1)
     const filter = ref({ searchBy: 'ten', term: '' })
     const isLoading = ref(false)
+    const sortBy = ref(null)
+    const direction = ref(1)
+    const isSearching = ref(false)
 
     return {
       products,
@@ -129,7 +177,10 @@ export default {
       total,
       page,
       isLoading,
-      filter
+      filter,
+      sortBy,
+      direction,
+      isSearching
     }
   },
   beforeMount() {
@@ -144,6 +195,12 @@ export default {
     },
     filter(value) {
       this.updateProductList()
+    },
+    sortBy() {
+      this.updateProductList()
+    },
+    direction() {
+      this.updateProductList()
     }
   },
   methods: {
@@ -154,7 +211,9 @@ export default {
         const res = await hanghoaService.getAll({
           page: this.page,
           pageSize: this.pageSize,
-          ...this.filter
+          ...this.filter,
+          sortBy: this.sortBy,
+          direction: this.direction
         })
 
         this.products = res.data
@@ -176,9 +235,24 @@ export default {
         this.page--
       }
     },
+    toggleDirection() {
+      this.direction = this.direction === 1 ? -1 : 1
+    },
     vndFormat,
     getImage(path) {
       return fileService.getFileUrl(path)
+    },
+    async toggleSearchingPanel() {
+      if (this.isSearching) {
+        const panel = document.querySelector('.filter-component')
+        panel.classList.add('animate__fadeOut')
+        setTimeout(() => {
+          this.isSearching = !this.isSearching
+          panel.classList.remove('animate__fadeOut')
+        }, 800)
+        return
+      }
+      this.isSearching = !this.isSearching
     }
   },
   computed: {

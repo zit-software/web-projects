@@ -49,7 +49,7 @@
           <RouterLink class="btn btn-outline-dark" to="/cart">
             <i class="fa fa-cart-shopping"></i>Cart<span
               class="badge bg-dark text-white ms-1 rounded-pill"
-              >0</span
+              >{{ numberOfItem }}</span
             >
           </RouterLink>
 
@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -101,13 +102,22 @@ export default {
   components: {
     RouterLink
   },
+
   data() {
+    const cartStore = useCartStore()
     const userStore = useUserStore()
     const showModal = ref(false)
-
+    const cart = ref(cartStore.cart)
     return {
       userStore,
+      cartStore,
+      cart,
       showModal
+    }
+  },
+  watch: {
+    cartStore() {
+      this.cart = cartStore.cart
     }
   },
   methods: {
@@ -137,6 +147,9 @@ export default {
     },
     isAdmin() {
       return this.userStore.isAdmin()
+    },
+    numberOfItem() {
+      return this.cart ? this.cart.length : 0
     }
   },
   mounted() {

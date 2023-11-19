@@ -107,8 +107,8 @@ class HangHoaController {
 				path,
 				ten: image.originalname,
 			});
-
-			await HangHoaModel.updateOne(
+			console.log(hinh);
+			const result = await HangHoaModel.updateOne(
 				{ id },
 				{
 					$push: {
@@ -116,7 +116,7 @@ class HangHoaController {
 					},
 				}
 			);
-
+			console.log(result);
 			return res.status(201).json(hinh.toObject());
 		} catch (error) {
 			return res.status(400).json({ message: error.message });
@@ -165,6 +165,7 @@ class HangHoaController {
 	 */
 	async capnhat(req, res) {
 		try {
+			delete req.body.images;
 			const id = req.params.id;
 			const result = await HangHoaModel.updateOne(
 				{

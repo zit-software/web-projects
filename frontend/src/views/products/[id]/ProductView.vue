@@ -56,7 +56,11 @@
           <button @click="addToCart" class="btn btn-secondary">
             <i class="fa fa-cart-plus"> </i>
           </button>
-          <button class="btn btn-primary">Mua</button>
+          <RouterLink to="/cart">
+            <button class="btn btn-primary">
+              <a>Mua</a>
+            </button>
+          </RouterLink>
         </div>
         <div v-if="cartItem">
           Đã có <span style="font-weight: bold">{{ cartItem.soluong }}</span> sản phẩm này trong giỏ

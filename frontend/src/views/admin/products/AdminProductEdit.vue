@@ -3,6 +3,7 @@
     <div class="spinner-border" v-if="isLoading"></div>
 
     <vee-form
+      style="min-width: 100%"
       v-else
       class="card"
       :validation-schema="productValidationScheme"
