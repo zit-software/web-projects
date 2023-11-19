@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "655a3951fa854119cad6ba3d"
+  },
+  "ten": "Workwear American Folded Vintage Loose Men's Shirt - Green _ XL.jpeg",
+  "path": "public/images/6347f54869b8305aca01db3c0ec81e65",
+  "createdAt": {
+    "$date": "2023-11-19T16:35:29.720Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:35:29.720Z"
+  },
+  "id": 1014,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "655a39c5fa854119cad6ba4b"
+  },
+  "ten": "_From Ordinary to Extraordinary_ Elevate Your Style with Trendy Men's Accessories_.jpeg",
+  "path": "public/images/eac85621690256ddf07fed27be85a7ac",
+  "createdAt": {
+    "$date": "2023-11-19T16:37:25.905Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:37:25.905Z"
+  },
+  "id": 1015,
+  "__v": 0
+}]

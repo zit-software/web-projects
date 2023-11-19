@@ -1,6 +1,17 @@
 <template>
   <main>
-    <div class="container mx-auto py-5">
+    <div
+      class="d-flex justify-content-center flex-column mt-5 align-items-center flex-wrap"
+      v-if="!user"
+    >
+      <h1 class="text-center">Vui Lòng Đăng Nhập Để Xem Giỏ Hàng</h1>
+      <div>
+        <RouterLink to="/auth/login">
+          <a class="btn btn-primary">Đăng nhập </a>
+        </RouterLink>
+      </div>
+    </div>
+    <div v-if="user" class="container mx-auto py-5">
       <div class="col col-12 mb-4">
         <h3>Thông tin giao hàng</h3>
         <table class="table">

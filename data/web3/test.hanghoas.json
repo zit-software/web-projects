@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "655a3947fa854119cad6ba39"
+  },
+  "ten": "Workwear Shirt ",
+  "mota": "Một chiếc áo sơ mi workwear bụi bặm",
+  "gia": 150000,
+  "soluong": 30,
+  "isDeleted": false,
+  "images": [
+    {
+      "ten": "Workwear American Folded Vintage Loose Men's Shirt - Green _ XL.jpeg",
+      "path": "public/images/6347f54869b8305aca01db3c0ec81e65",
+      "_id": {
+        "$oid": "655a3951fa854119cad6ba3d"
+      },
+      "createdAt": {
+        "$date": "2023-11-19T16:35:29.720Z"
+      },
+      "updatedAt": {
+        "$date": "2023-11-19T16:35:29.720Z"
+      },
+      "id": 1014,
+      "__v": 0
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-11-19T16:35:19.378Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:35:29.737Z"
+  },
+  "id": 1004,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "655a39a3fa854119cad6ba47"
+  },
+  "ten": "Flannel Caro Navy",
+  "mota": "Một chiếc áo flannel caro màu navy, dễ phối",
+  "gia": 350000,
+  "soluong": 50,
+  "isDeleted": false,
+  "images": [
+    {
+      "ten": "_From Ordinary to Extraordinary_ Elevate Your Style with Trendy Men's Accessories_.jpeg",
+      "path": "public/images/eac85621690256ddf07fed27be85a7ac",
+      "_id": {
+        "$oid": "655a39c5fa854119cad6ba4b"
+      },
+      "createdAt": {
+        "$date": "2023-11-19T16:37:25.905Z"
+      },
+      "updatedAt": {
+        "$date": "2023-11-19T16:37:25.905Z"
+      },
+      "id": 1015,
+      "__v": 0
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-11-19T16:36:51.920Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:37:25.910Z"
+  },
+  "id": 1005,
+  "__v": 0
+}]
