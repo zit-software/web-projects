@@ -8,18 +8,17 @@
             <tr>
               <th class="text-center">Họ Tên</th>
               <th class="text-center">Số Điện Thoại</th>
+              <th class="text-center">Địa chỉ</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="text-center">{{ user.ten }}</td>
               <td class="text-center">{{ user.sdt }}</td>
+              <td class="text-center">{{ user.diachi }}</td>
             </tr>
           </tbody>
         </table>
-        <i class="fa-solid fa-location-crosshairs"></i>
-        <span class="fw-bold"> Giao đến: </span>
-        <span> {{ user.diachi }}</span>
       </div>
 
       <hr class="divider" />

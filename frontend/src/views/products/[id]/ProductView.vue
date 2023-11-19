@@ -3,27 +3,34 @@
     <span class="spinner-border" v-if="!product"></span>
     <div class="row" v-else>
       <div class="col col-12 col-md-6">
-        <img
-          v-if="product.images[imgIndex]"
-          :src="fileService.getFileUrl(product.images[imgIndex].path)"
-          :alt="product.images[imgIndex].ten"
-          style="width: 100%; aspect-ratio: 1; object-fit: cover"
-          class="rounded border"
-        />
+        <div style="display: flex; gap: 5px">
+          <div style="flex: 1">
+            <img
+              v-if="product.images[imgIndex]"
+              :src="fileService.getFileUrl(product.images[imgIndex].path)"
+              :alt="product.images[imgIndex].ten"
+              style="width: 100%; aspect-ratio: 1; object-fit: cover"
+              class="rounded border"
+            />
+          </div>
 
-        <div class="d-flex gap-2 my-2">
-          <img
-            v-for="(image, index) in product.images"
-            :key="image.id"
-            :src="fileService.getFileUrl(image.path)"
-            :alt="image.ten"
-            style="width: 150px; aspect-ratio: 1; cursor: pointer"
-            class="border rounded border-2"
-            :class="{
-              'border-primary': imgIndex === index
-            }"
-            @click="imgIndex = index"
-          />
+          <div
+            class="d-flex gap-2"
+            style="flex-direction: column; overflow: auto; max-height: 450px"
+          >
+            <img
+              v-for="(image, index) in product.images"
+              :key="image.id"
+              :src="fileService.getFileUrl(image.path)"
+              :alt="image.ten"
+              style="width: 150px; aspect-ratio: 1; cursor: pointer"
+              class="border rounded border-2"
+              :class="{
+                'border-primary': imgIndex === index
+              }"
+              @click="imgIndex = index"
+            />
+          </div>
         </div>
       </div>
 
@@ -67,7 +74,7 @@
       </div>
     </div>
 
-    <h3>Các sản phẩm khác</h3>
+    <h3 class="my-3">Các sản phẩm khác</h3>
 
     <div class="row">
       <div
