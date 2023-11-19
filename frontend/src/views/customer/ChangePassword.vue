@@ -114,12 +114,10 @@ export default {
         delete value.checkNewPassword
         const result = await authService.changePassword(value)
         this.$toast.success(result.message, {
-          position: 'top-right',
           duration: 3000
         })
       } catch (error) {
         this.$toast.error(error.message, {
-          position: 'top-right',
           duration: 3000
         })
       }

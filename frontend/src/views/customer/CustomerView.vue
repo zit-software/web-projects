@@ -145,12 +145,10 @@ export default {
           ...value
         })
         this.$toast.success('Cập nhật thông tin thành công', {
-          position: 'top-right',
           duration: 3000
         })
       } catch (err) {
         this.$toast.error('Cập nhật thông tin thất bại', {
-          position: 'top-right',
           duration: 3000
         })
       }

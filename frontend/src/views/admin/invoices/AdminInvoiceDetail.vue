@@ -230,12 +230,10 @@ export default {
           trangThaiDH: this.data.trangThaiDH
         })
         this.$toast.success('Cập nhật thành công', {
-          position: 'top-right',
           duration: 2000
         })
       } catch (error) {
         this.$toast.error(error.message, {
-          position: 'top-right',
           duration: 2000
         })
       }
@@ -260,7 +258,6 @@ export default {
         await this.getDetail()
       } catch (error) {
         this.$toast.error(error.message, {
-          position: 'top-right',
           duration: 2000
         })
       }
@@ -274,7 +271,6 @@ export default {
         await this.getDetail()
       } catch (error) {
         this.$toast.error(error.message, {
-          position: 'top-right',
           duration: 2000
         })
       }
