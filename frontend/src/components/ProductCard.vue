@@ -16,7 +16,9 @@
     </div>
 
     <div class="card-body">
-      <h4 class="card-title">{{ $props.product.ten }}</h4>
+      <h4 class="card-title" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden">
+        {{ $props.product.ten }}
+      </h4>
       <span>{{ vndFormat($props.product.gia) }}</span>
     </div>
   </RouterLink>

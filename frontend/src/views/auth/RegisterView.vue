@@ -1,5 +1,5 @@
 <template>
-  <div class="container py-4 animate__animated animate__fadeInDown">
+  <div class="container py-4">
     <vee-form
       class="card p-4 shadow shadow-sm"
       @submit="register"

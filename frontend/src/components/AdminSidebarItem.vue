@@ -20,12 +20,11 @@ export default {
 <style scoped>
 .item {
   display: flex;
-  color: #fff;
   text-decoration: none;
   gap: 15px;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px dashed #ddd;
   height: 64px;
 }
 
