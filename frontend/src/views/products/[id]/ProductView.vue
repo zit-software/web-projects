@@ -85,11 +85,12 @@ import ProductCard from '@/components/ProductCard.vue'
 import fileService from '@/services/file.service'
 import hanghoaService from '@/services/hanghoa.service'
 import { useCartStore } from '@/stores/cart'
+import { useUserStore } from '@/stores/user'
 import vndFormat from '@/utils/vndFormat'
 import { ref } from 'vue'
 
 const cartStore = useCartStore()
-
+const userStore = useUserStore()
 export default {
   name: 'ProductView',
   data() {
@@ -124,6 +125,10 @@ export default {
       }
     },
     addToCart() {
+      if (!userStore.user) {
+        this.$router.push('/auth/login')
+        return
+      }
       cartStore.addToCart({
         id: this.product.id,
         soluong: this.quantity

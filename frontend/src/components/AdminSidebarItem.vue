@@ -25,7 +25,7 @@ export default {
   gap: 15px;
   align-items: center;
   padding: 10px 20px;
-  border-bottom: 1px solid #555;
+  border-bottom: 1px solid #fff;
   height: 64px;
 }
 

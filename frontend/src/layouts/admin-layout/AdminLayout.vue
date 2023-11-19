@@ -2,10 +2,10 @@
   <div class="wrapper">
     <AdminHeader />
     <div class="inner">
-      <AdminSidebar />
       <div class="content">
         <RouterView />
       </div>
+      <AdminSidebar />
     </div>
   </div>
 </template>

@@ -1,9 +1,9 @@
 <template>
   <main>
     <div class="container">
-      <div class="row">
-        <div class="col col-12 col-lg-4 image-container mt-5 animate__animated animate__fadeIn">
-          <img class="image" :src="customerImage" />
+      <div class="row justify-content-center">
+        <div class="col-12 d-flex justify-content-center">
+          <img class="image" style="width: 100%" src="@/assets/images/banner.webp" />
         </div>
         <div
           class="col col-12 col-lg-8 form-container mt-5 fst-italic animate__animated animate__lightSpeedInRight"
@@ -92,7 +92,8 @@ main {
   align-items: center;
 }
 .image {
-  height: 550px;
+  position: absolute;
+  height: 600px;
   border-radius: 12px;
 }
 form {

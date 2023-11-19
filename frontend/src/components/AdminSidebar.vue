@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :class="{ open: isOpened }">
+  <div class="sidebar bg-info" :class="{ open: isOpened }">
     <div class="item-list">
       <AdminSidebarItem path="/admin" icon="fa fa-home" title="Trang chủ" :show-title="isOpened" />
 
@@ -52,8 +52,7 @@ export default {
 <style scoped>
 .sidebar {
   width: 64px;
-  border-right: 1px solid #ddd;
-  background: #222;
+  border-right: 1px solid #fff;
   display: flex;
   flex-direction: column;
   transition: 0.6s ease;
