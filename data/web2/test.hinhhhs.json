@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "6559edb403cdc1da139337e9"
+  },
+  "ten": "LotFancy Teddy Bear Stuffed Animals, 20 inch Soft Cuddly Stuffed Plush Bear, Cute Stuffed Animals Toy with Footprints, Gifts for Kids Baby Toddlers on Baby Shower, Valentine's Day, Brown.jpeg",
+  "path": "public/images/b9f795c1b19ca39d86a5a4cb8838cd9a",
+  "createdAt": {
+    "$date": "2023-11-19T11:12:52.426Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T11:12:52.426Z"
+  },
+  "id": 1012,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "655a3717fa854119cad6ba10"
+  },
+  "ten": "60233_alt1.jpg",
+  "path": "public/images/7351204c0be062231a20e0cb88d1d60d",
+  "createdAt": {
+    "$date": "2023-11-19T16:25:59.362Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:25:59.362Z"
+  },
+  "id": 1013,
+  "__v": 0
+}]

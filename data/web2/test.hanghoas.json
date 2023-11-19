@@ -1,0 +1,70 @@
+[{
+  "_id": {
+    "$oid": "6559eda103cdc1da139337e5"
+  },
+  "ten": "Gấu Bông Teddy",
+  "mota": "Gấu bông là người bạn giúp trẻ cho trẻ có những giấc ngủ thật thoải mái. Đặt ngay!!!",
+  "gia": 500000,
+  "soluong": 100,
+  "isDeleted": false,
+  "images": [
+    {
+      "ten": "LotFancy Teddy Bear Stuffed Animals, 20 inch Soft Cuddly Stuffed Plush Bear, Cute Stuffed Animals Toy with Footprints, Gifts for Kids Baby Toddlers on Baby Shower, Valentine's Day, Brown.jpeg",
+      "path": "public/images/b9f795c1b19ca39d86a5a4cb8838cd9a",
+      "_id": {
+        "$oid": "6559edb403cdc1da139337e9"
+      },
+      "createdAt": {
+        "$date": "2023-11-19T11:12:52.426Z"
+      },
+      "updatedAt": {
+        "$date": "2023-11-19T11:12:52.426Z"
+      },
+      "id": 1012,
+      "__v": 0
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-11-19T11:12:33.483Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T11:12:56.331Z"
+  },
+  "id": 1002,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "655a3714fa854119cad6ba0c"
+  },
+  "ten": "Lego City",
+  "mota": "Bộ đồ chơi lắp ráp Lego giúp luyện trí óc và tính kiên nhẫn cho trẻ",
+  "gia": 450000,
+  "soluong": 100,
+  "isDeleted": false,
+  "images": [
+    {
+      "ten": "60233_alt1.jpg",
+      "path": "public/images/7351204c0be062231a20e0cb88d1d60d",
+      "_id": {
+        "$oid": "655a3717fa854119cad6ba10"
+      },
+      "createdAt": {
+        "$date": "2023-11-19T16:25:59.362Z"
+      },
+      "updatedAt": {
+        "$date": "2023-11-19T16:25:59.362Z"
+      },
+      "id": 1013,
+      "__v": 0
+    }
+  ],
+  "createdAt": {
+    "$date": "2023-11-19T16:25:56.012Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T16:26:01.834Z"
+  },
+  "id": 1003,
+  "__v": 0
+}]
