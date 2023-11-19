@@ -179,6 +179,42 @@ class DatHangController {
 			return res.status(400).send({ message: error.message });
 		}
 	}
+
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async capnhatchitiet(req, res) {
+		try {
+			const id = req.params.id;
+			const newChiTiet = await ChiTietDatHangModel.findOneAndUpdate({ id }, req.body, { new: true });
+			return res.status(200).json(newChiTiet);
+		} catch (error) {
+			return res.status(400).send({ message: error.message });
+		}
+	}
+	/**
+	 *
+	 * @param {import('express').Request} req
+	 * @param {import('express').Response} res
+	 * @param {Function} next
+	 */
+	async xoachitiet(req, res) {
+		try {
+			const id = req.params.id;
+			const newChiTiet = await ChiTietDatHangModel.findOneAndDelete({ id }, { returnDocument: true });
+			await DatHangModel.findByIdAndUpdate(newChiTiet.dh, {
+				$pull: {
+					chitiets: newChiTiet._id,
+				},
+			});
+			return res.status(200).json(newChiTiet);
+		} catch (error) {
+			return res.status(400).send({ message: error.message });
+		}
+	}
 	/**
 	 *
 	 * @param {import('express').Request} req

@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="row my-5 justify-content-between">
-        <div class="col col-5">
+        <div class="col col-6">
           <h4>Thông tin khách hàng</h4>
           <table class="table table-responsive">
             <thead>
@@ -55,7 +55,7 @@
             </tbody>
           </table>
         </div>
-        <div class="col col-5">
+        <div class="col col-6">
           <h4>Thông tin nhân viên</h4>
           <table class="table table-responsive">
             <thead>
@@ -93,6 +93,7 @@
                   <th class="text-center" scope="col">Ảnh</th>
                   <th class="text-center" scope="col">Hàng</th>
                   <th class="text-center" scope="col">Giá</th>
+                  <th class="text-center" scope="col">Giảm Giá</th>
                   <th class="text-center" scope="col">Số Lượng</th>
                   <th></th>
                 </tr>
@@ -113,14 +114,54 @@
                   <td>{{ chitiet.hanghoa.ten }}</td>
                   <td>{{ vndFormat(chitiet.hanghoa.gia) }}</td>
                   <td>
+                    <div v-if="editingId !== chitiet.id">
+                      {{ chitiet.giamgia ? vndFormat(chitiet.giamgia) : vndFormat(0) }}
+                    </div>
+                    <div v-else>
+                      <input
+                        class="form-control"
+                        placeholder="Giảm giá"
+                        type="number"
+                        v-model="editingPayload.giamgia"
+                        min="0"
+                        :max="chitiet.hanghoa.gia"
+                      />
+                      <em v-if="editingPayload.giamgia">{{ vndFormat(editingPayload.giamgia) }}</em>
+                    </div>
+                  </td>
+                  <td>
                     <div class="d-flex justify-content-center">
                       <div class="item-quantity">
-                        {{ chitiet.soluong }}
+                        <div v-if="editingId !== chitiet.id">
+                          {{ chitiet.soluong }}
+                        </div>
+                        <div v-else>
+                          <input
+                            class="form-control"
+                            placeholder="Giảm giá"
+                            type="number"
+                            v-model="editingPayload.soluong"
+                            min="1"
+                          />
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td>
-                    <button @click="() => removeFromCart(cartItem.id)" class="btn btn-danger ms-2">
+                    <button
+                      @click="() => updateRow(chitiet.id)"
+                      v-if="editingId === chitiet.id"
+                      class="btn btn-info"
+                    >
+                      Lưu
+                    </button>
+                    <button v-else class="btn btn-info">
+                      <i @click="() => selectEdit(chitiet.id)" class="fa-solid fa-pencil"></i>
+                    </button>
+                    <button v-if="editingId === chitiet.id" class="btn btn-danger ms-2">
+                      <span @click="cancelEdit" v-if="editingId === chitiet.id">Hủy</span>
+                    </button>
+                    <button @click="() => removeRow(chitiet.id)" v-else class="btn btn-danger ms-2">
                       <i class="fa-solid fa-trash"></i>
                     </button>
                   </td>
@@ -198,12 +239,43 @@ export default {
           duration: 2000
         })
       }
-    }
+    },
+    selectEdit(id) {
+      const chitiet = this.data.chitiets.find((e) => e.id === id)
+      this.editingPayload = {
+        giamgia: chitiet.giamgia,
+        soluong: chitiet.soluong
+      }
+      this.editingId = id
+    },
+    cancelEdit() {
+      this.editingId = null
+      this.editingPayload = {}
+    },
+    async updateRow(id) {
+      try {
+        await dathangService.updateChiTiet(id, this.editingPayload)
+        this.$toast.success('Cập nhật thành công', {
+          position: 'top-right',
+          duration: 2000
+        })
+        this.cancelEdit()
+        this.getDetail()
+      } catch (error) {
+        this.$toast.error(error.message, {
+          position: 'top-right',
+          duration: 2000
+        })
+      }
+    },
+    removeRow(id) {}
   },
   data() {
     const data = ref(null)
+    const editingId = ref(null)
+    const editingPayload = {}
     const tongtien = ref(0)
-    return { data, tongtien }
+    return { data, tongtien, editingId, editingPayload }
   },
   mounted() {
     this.getDetail()
