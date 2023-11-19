@@ -1,16 +1,16 @@
 <template>
   <main>
     <div v-if="data" class="container">
-      <div class="mt-5">
-        <h1>
+      <div class="mt-5 row justify-content-between">
+        <h1 class="col-6">
           Đơn hàng #<span style="font-weight: bold">{{ data.id }}</span>
         </h1>
       </div>
       <div class="row">
-        <div class="col-5">
+        <div class="col-12">
           <h4>Thông tin đơn hàng</h4>
-          <table class="table table-responsive">
-            <thead>
+          <table class="table">
+            <thead class="table-light">
               <tr>
                 <th>Ngày đặt hàng</th>
                 <th>Ngày giao hàng</th>
@@ -21,15 +21,21 @@
             <tbody>
               <tr>
                 <td>{{ formatTime(data.ngayDH) }}</td>
-                <td>{{ data.ngayGH ? formatTime(data.ngayGH) : 'Chưa có' }}</td>
+                <td><VueDatePicker :format="format" v-model="data.ngayGH" /></td>
                 <td>{{ vndFormat(tongtien) }}</td>
-                <td>{{ formatStatus }}</td>
+                <td>
+                  <select class="form-select" v-model="data.trangThaiDH">
+                    <option value="received">Chưa Xử Lý</option>
+                    <option value="processing">Đang Xử Lý</option>
+                    <option value="completed">Đã hoàn thành</option>
+                  </select>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      <div class="row gap-2 my-5 justify-content-between">
+      <div class="row my-5 justify-content-between">
         <div class="col col-5">
           <h4>Thông tin khách hàng</h4>
           <table class="table table-responsive">
@@ -124,6 +130,12 @@
           </div>
         </div>
       </div>
+      <div class="d-flex justify-content-end">
+        <button @click="update" class="btn btn-primary">
+          <i class="fa-solid fa-check"></i>
+          Cập nhật
+        </button>
+      </div>
     </div>
   </main>
 </template>
@@ -145,8 +157,9 @@ import fileService from '@/services/file.service'
 import dayjs from 'dayjs'
 import vndFormat from '@/utils/vndFormat'
 import { ref } from 'vue'
-
+import VueDatePicker from '@vuepic/vue-datepicker'
 export default {
+  components: { VueDatePicker },
   methods: {
     async getDetail() {
       const id = this.$route.params.id
@@ -160,7 +173,32 @@ export default {
     getImage(path) {
       return fileService.getFileUrl(path)
     },
-    vndFormat
+    vndFormat,
+    format(date) {
+      const day = date.getDate()
+      const month = date.getMonth() + 1
+      const year = date.getFullYear()
+
+      return `${day}/${month}/${year}`
+    },
+    async update() {
+      console.log(this.data)
+      try {
+        await dathangService.update(this.data._id, {
+          ngayGH: this.data.ngayGH,
+          trangThaiDH: this.data.trangThaiDH
+        })
+        this.$toast.success('Cập nhật thành công', {
+          position: 'top-right',
+          duration: 2000
+        })
+      } catch (error) {
+        this.$toast.error(error.message, {
+          position: 'top-right',
+          duration: 2000
+        })
+      }
+    }
   },
   data() {
     const data = ref(null)
@@ -175,7 +213,7 @@ export default {
       if (!this.data) return ''
       if (this.data.trangThaiDH == 'received') {
         return 'Chưa xử lý'
-      } else if (this.data.trangThaiDH == 'delivering') {
+      } else if (this.data.trangThaiDH == 'processing') {
         return 'Đang xử lý'
       } else if (this.data.trangThaiDH == 'completed') {
         return 'Đã hoàn thành'

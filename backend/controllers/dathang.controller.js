@@ -164,8 +164,16 @@ class DatHangController {
 	 */
 	async capnhat(req, res) {
 		try {
+			const currentUser = req.currentUser;
 			const id = req.params.id;
-			const newDatHang = await DatHangModel.findByIdAndUpdate(id, req.body, { new: true });
+			delete req.body.chitiets;
+			delete req.body.ngayDH;
+			delete currentUser.role;
+			const newDatHang = await DatHangModel.findByIdAndUpdate(
+				id,
+				{ ...req.body, nv: currentUser },
+				{ new: true }
+			);
 			return res.status(200).json(newDatHang);
 		} catch (error) {
 			return res.status(400).send({ message: error.message });

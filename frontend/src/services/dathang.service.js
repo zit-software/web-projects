@@ -19,6 +19,9 @@ class HangHoaService {
   async getDetail(id) {
     return await this.#client.get('/' + id)
   }
+  async update(id, body) {
+    return await this.#client.put('/' + id, body)
+  }
 }
 
 export default new HangHoaService()
