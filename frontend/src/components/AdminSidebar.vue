@@ -57,6 +57,7 @@ export default {
   display: flex;
   flex-direction: column;
   transition: 0.6s ease;
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
 }
 
 .sidebar.open {

@@ -156,18 +156,16 @@ div.banner {
 }
 </style>
 <script>
-import hanghoaService from '@/services/hanghoa.service'
-import fileService from '@/services/file.service'
-import vndFormat from '@/utils/vndFormat'
 import FilterComponent from '@/components/FilterComponent.vue'
+import fileService from '@/services/file.service'
+import hanghoaService from '@/services/hanghoa.service'
+import vndFormat from '@/utils/vndFormat'
 import { ref } from 'vue'
-import ProductCard from '@/components/ProductCard.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    FilterComponent,
-    ProductCard
+    FilterComponent
   },
   data() {
     const products = ref([])

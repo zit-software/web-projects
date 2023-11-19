@@ -7,18 +7,17 @@
           v-if="product.images[imgIndex]"
           :src="fileService.getFileUrl(product.images[imgIndex].path)"
           :alt="product.images[imgIndex].ten"
-          style="width: 100%; aspect-ratio: 1; object-fit: cover"
-          class="rounded border"
+          class="product-image"
         />
 
-        <div class="d-flex gap-2 my-2">
+        <div class="d-flex gap-2 my-2" style="overflow: auto">
           <img
             v-for="(image, index) in product.images"
             :key="image.id"
             :src="fileService.getFileUrl(image.path)"
             :alt="image.ten"
             style="width: 150px; aspect-ratio: 1; cursor: pointer"
-            class="border rounded border-2"
+            class="product-image"
             :class="{
               'border-primary': imgIndex === index
             }"
@@ -152,3 +151,13 @@ export default {
   components: { ProductCard }
 }
 </script>
+
+<style scoped>
+.product-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 2px solid #000;
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+}
+</style>

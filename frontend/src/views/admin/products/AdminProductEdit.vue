@@ -222,8 +222,9 @@ export default {
 .file-list {
   height: 50vh;
   overflow: auto;
-  border: 1px solid #ddd;
+  border: 2px solid #000;
   margin-bottom: 1rem;
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
 }
 
 .upload-toolbar {
