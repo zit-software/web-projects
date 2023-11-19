@@ -1,13 +1,13 @@
 <template>
   <div class="admin-pannel" v-if="isAdmin">
-    <RouterLink class="btn btn-sm btn-warning" to="/admin">
+    <RouterLink class="btn btn-sm btn-sm btn-primary" to="/admin">
       <i class="fa fa-shield"></i>
       ADMIN CP
     </RouterLink>
   </div>
-  <nav class="navbar navbar-expand-lg border-bottom">
+  <nav class="navbar navbar-expand-lg border-bottom bg-white" style="position: sticky; top: 0">
     <div class="container px-4 px-lg-5">
-      <RouterLink class="navbar-brand" to="/">Shopping</RouterLink>
+      <RouterLink class="navbar-brand" to="/">Julido</RouterLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -20,24 +20,11 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-          <RouterLink to="/">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page">Home</a>
-            </li>
-          </RouterLink>
-          <RouterLink to="/customer">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page">Hồ sơ</a>
-            </li>
-          </RouterLink>
-        </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"></ul>
         <div class="d-flex gap-1">
-          <RouterLink class="btn btn-outline-dark" to="/cart">
-            <i class="fa fa-cart-shopping"></i>Cart<span
-              class="badge bg-dark text-white ms-1 rounded-pill"
-              >{{ numberOfItem }}</span
-            >
+          <RouterLink class="btn" to="/cart" v-if="user">
+            <i class="fa fa-cart-shopping"></i>
+            <span class="badge bg-danger text-white ms-1 rounded-pill">{{ numberOfItem }}</span>
           </RouterLink>
 
           <div class="dropdown" :class="{ show: showModal }" v-if="isLogged" @click="toggleModal">
@@ -104,7 +91,7 @@ export default {
   },
   watch: {
     cartStore() {
-      this.cart = cartStore.cart
+      this.cart = this.cartStore.cart
     },
     cart() {}
   },
@@ -153,7 +140,7 @@ export default {
 <style scoped>
 .admin-pannel {
   padding: 10px;
-  background: #000;
+  background: #4f52ff;
   display: flex;
   justify-content: flex-end;
   align-items: center;

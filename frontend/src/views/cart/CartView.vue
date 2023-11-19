@@ -1,88 +1,88 @@
 <template>
   <main>
     <div class="container mx-auto py-5">
-      <div class="row p-2 justify-content-between align-items-center mt-5">
-        <div class="col col-4 info-container">
-          <h1 class="text-center">Thông tin giao hàng</h1>
-          <table class="table">
+      <div class="col col-12 mb-4">
+        <h3>Thông tin giao hàng</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Họ Tên</th>
+              <th class="text-center">Số Điện Thoại</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">{{ user.ten }}</td>
+              <td class="text-center">{{ user.sdt }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <i class="fa-solid fa-location-crosshairs"></i>
+        <span class="fw-bold"> Giao đến: </span>
+        <span> {{ user.diachi }}</span>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="col col-12">
+        <h3>Sản phẩm</h3>
+        <div class="items-container">
+          <table class="table table-border">
             <thead>
               <tr>
-                <th class="text-center">Họ Tên</th>
-                <th class="text-center">Số Điện Thoại</th>
+                <th class="text-center" scope="col"></th>
+                <th class="text-center" scope="col">Tên sản phẩm</th>
+                <th class="text-center" scope="col">Giá</th>
+                <th class="text-center" scope="col">Số Lượng</th>
+                <th></th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td class="text-center">{{ user.ten }}</td>
-                <td class="text-center">{{ user.sdt }}</td>
+            <tbody v-if="hhMap && cart">
+              <tr v-if="!cart || cart.length == 0">
+                <td colspan="5" class="text-center">Bạn chưa thêm gì vào giỏ!</td>
+              </tr>
+              <tr v-for="(cartItem, index) in cart" :key="index" class="item">
+                <th scope="row">
+                  <div class="d-flex justify-content-center">
+                    <div class="item-image">
+                      <img
+                        v-if="
+                          hhMap.get(cartItem.id)?.images &&
+                          hhMap.get(cartItem.id)?.images.length > 0
+                        "
+                        :src="getImage(hhMap.get(cartItem.id)?.images[0].path)"
+                      />
+                    </div>
+                  </div>
+                </th>
+                <td>{{ hhMap.get(cartItem.id)?.ten }}</td>
+                <td>{{ vndFormat(hhMap.get(cartItem.id)?.gia) }}</td>
+                <td>
+                  <div class="d-flex justify-content-center">
+                    <div class="item-quantity">
+                      {{ cartItem.soluong }}
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <button @click="() => removeFromCart(cartItem.id)" class="btn btn-danger ms-2">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
-          <i class="fa-solid fa-location-crosshairs"></i>
-          <span class="fw-bold"> Giao đến: </span>
-          <span> {{ user.diachi }}</span>
-        </div>
-        <div class="col col-7 list-container">
-          <h1 class="text-center">Giỏ hàng</h1>
-          <div class="items-container">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="text-center" scope="col">Ảnh</th>
-                  <th class="text-center" scope="col">Hàng</th>
-                  <th class="text-center" scope="col">Giá</th>
-                  <th class="text-center" scope="col">Số Lượng</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody v-if="hhMap && cart">
-                <tr v-if="!cart || cart.length == 0">
-                  <td colspan="5" class="text-center">Bạn chưa thêm gì vào giỏ!</td>
-                </tr>
-                <tr v-for="cartItem of cart" class="item">
-                  <th scope="row">
-                    <div class="d-flex justify-content-center">
-                      <div class="item-image">
-                        <img
-                          v-if="
-                            hhMap.get(cartItem.id)?.images &&
-                            hhMap.get(cartItem.id)?.images.length > 0
-                          "
-                          :src="getImage(hhMap.get(cartItem.id)?.images[0].path)"
-                        />
-                      </div>
-                    </div>
-                  </th>
-                  <td>{{ hhMap.get(cartItem.id)?.ten }}</td>
-                  <td>{{ vndFormat(hhMap.get(cartItem.id)?.gia) }}</td>
-                  <td>
-                    <div class="d-flex justify-content-center">
-                      <div class="item-quantity">
-                        {{ cartItem.soluong }}
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <button @click="() => removeFromCart(cartItem.id)" class="btn btn-danger ms-2">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
       <div class="row justify-content-end flex-row mb-5">
         <div class="button-container">
-          <button @click="back" type="button" class="btn btn-dark">
-            <i class="fa-solid fa-house"></i>
+          <button @click="back" type="button" class="btn">
+            <i class="fa-solid fa-angle-left"></i>
             Trở lại
           </button>
         </div>
 
         <div class="button-container">
-          <!-- Button trigger modal -->
           <button
             type="button"
             class="btn btn-primary"
@@ -96,6 +96,7 @@
       </div>
     </div>
   </main>
+
   <ConFirmModal :chitietsProp="cart" :hhMap="hhMap"></ConFirmModal>
 </template>
 <style>
@@ -134,7 +135,7 @@ import ConFirmModal from './ConFirmModal.vue'
 const cartStore = useCartStore()
 
 export default {
-  name: 'cart',
+  name: 'CardView',
   components: { ConFirmModal },
   methods: {
     getCart() {

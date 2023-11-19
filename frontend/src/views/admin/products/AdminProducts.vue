@@ -4,13 +4,10 @@
       <h2 class="card-header">Hàng hóa</h2>
 
       <div class="card-body">
-        <div class="card-title">
-          <RouterLink to="/admin/products/create" class="btn btn-primary">
-            <i class="fa fa-add"></i> Thêm
-          </RouterLink>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center"
+          class="mb-3"
+        >
           <ul class="pagination">
             <li
               class="page-item"
@@ -54,12 +51,17 @@
 
             <button
               type="button"
-              class="btn btn-secondary"
-              :class="{ 'btn-warning': isOpenFilter }"
+              class="btn"
+              :class="{ 'btn-primary': isOpenFilter, 'btn-outline-primary': !isOpenFilter }"
               @click="isOpenFilter = !isOpenFilter"
             >
               <i class="fa fa-filter"></i>
+              Bộ lọc
             </button>
+
+            <RouterLink to="/admin/products/create" class="btn btn-primary">
+              <i class="fa fa-add"></i> Thêm
+            </RouterLink>
           </div>
         </div>
 
@@ -153,9 +155,7 @@
                 <td>{{ product.mota }}</td>
                 <td>{{ vndFormat(product.gia) }}</td>
                 <td>
-                  <span class="btn btn-success btn-sm">
-                    {{ product.soluong }}
-                  </span>
+                  {{ product.soluong }}
                 </td>
                 <td>{{ dateFormat(product.createdAt) }}</td>
                 <td>{{ dateFormat(product.updatedAt) }}</td>

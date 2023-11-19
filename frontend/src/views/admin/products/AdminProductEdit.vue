@@ -16,123 +16,132 @@
       </h5>
 
       <div class="card-body">
-        <div class="mb-2">
-          <label for="ten">
-            Tên hàng hóa
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            type="text"
-            class="form-control"
-            name="ten"
-            id="ten"
-            :class="{ 'is-invalid': errors.ten }"
-          />
-          <ErrorMessage name="ten" class="invalid-feedback" />
-        </div>
+        <div class="row">
+          <div class="col col-12 col-md-6">
+            <div class="mb-2">
+              <label for="ten">
+                Tên hàng hóa
+                <span class="text-danger">*</span>
+              </label>
+              <Field
+                type="text"
+                class="form-control"
+                name="ten"
+                id="ten"
+                :class="{ 'is-invalid': errors.ten }"
+              />
+              <ErrorMessage name="ten" class="invalid-feedback" />
+            </div>
 
-        <div class="mb-2">
-          <label for="mota">
-            Mô tả
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            as="textarea"
-            class="form-control"
-            name="mota"
-            id="mota"
-            :class="{ 'is-invalid': errors.mota }"
-          />
-          <ErrorMessage name="mota" class="invalid-feedback" />
-        </div>
+            <div class="mb-2">
+              <label for="mota">
+                Mô tả
+                <span class="text-danger">*</span>
+              </label>
+              <Field
+                as="textarea"
+                class="form-control"
+                name="mota"
+                id="mota"
+                :class="{ 'is-invalid': errors.mota }"
+              />
+              <ErrorMessage name="mota" class="invalid-feedback" />
+            </div>
 
-        <div class="mb-2">
-          <label for="gia">
-            Giá
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            type="number"
-            class="form-control"
-            name="gia"
-            id="gia"
-            :class="{ 'is-invalid': errors.gia }"
-          />
-          <span v-if="values.gia">
-            {{ vndFormat(values.gia) }}
-          </span>
-          <ErrorMessage name="gia" class="invalid-feedback" />
-        </div>
+            <div class="mb-2">
+              <label for="gia">
+                Giá
+                <span class="text-danger">*</span>
+              </label>
+              <Field
+                type="number"
+                class="form-control"
+                name="gia"
+                id="gia"
+                :class="{ 'is-invalid': errors.gia }"
+              />
+              <span v-if="values.gia">
+                {{ vndFormat(values.gia) }}
+              </span>
+              <ErrorMessage name="gia" class="invalid-feedback" />
+            </div>
 
-        <div class="mb-2">
-          <label for="soluong"> Số lượng </label>
-          <Field
-            type="number"
-            class="form-control"
-            name="soluong"
-            id="soluong"
-            :class="{ 'is-invalid': errors.soluong }"
-          />
-          <ErrorMessage name="soluong" class="invalid-feedback" />
-        </div>
+            <div class="mb-2">
+              <label for="soluong"> Số lượng </label>
+              <Field
+                type="number"
+                class="form-control"
+                name="soluong"
+                id="soluong"
+                :class="{ 'is-invalid': errors.soluong }"
+              />
+              <ErrorMessage name="soluong" class="invalid-feedback" />
+            </div>
 
-        <div class="mb-2">
-          <label for="ghichu"> Ghi chú </label>
-          <Field
-            as="textarea"
-            class="form-control"
-            name="ghichu"
-            id="ghichu"
-            :class="{ 'is-invalid': errors.ghichu }"
-          />
-          <ErrorMessage name="ghichu" class="invalid-feedback" />
-        </div>
+            <div class="mb-2">
+              <label for="ghichu"> Ghi chú </label>
+              <Field
+                as="textarea"
+                class="form-control"
+                name="ghichu"
+                id="ghichu"
+                :class="{ 'is-invalid': errors.ghichu }"
+              />
+              <ErrorMessage name="ghichu" class="invalid-feedback" />
+            </div>
+          </div>
 
-        <div class="upload-toolbar">
-          <label class="btn btn-success btn-sm">
-            <i class="fa fa-file-upload"></i>
-            Thêm ảnh
-            <input type="file" accept="image/*" hidden @change="addImage" />
-          </label>
-        </div>
+          <div class="col col-12 col-md-6">
+            <div class="upload-toolbar">
+              <label class="btn btn-primary">
+                <i class="fa fa-file-upload"></i>
+                Thêm ảnh
+                <input type="file" accept="image/*" hidden @change="addImage" />
+              </label>
+            </div>
 
-        <div class="file-list py-3">
-          <div class="container container-fluid">
-            <div class="row">
-              <div class="col col-12 col-md-6 col-lg-4" v-for="image in images" :key="image._id">
-                <div class="card mb-2">
-                  <h4
-                    class="card-header"
-                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+            <div class="file-list p-1">
+              <div class="container container-fluid">
+                <div class="row">
+                  <div
+                    class="col col-12 col-md-6 col-lg-4 p-1"
+                    v-for="image in images"
+                    :key="image._id"
                   >
-                    {{ image.ten }}
-                  </h4>
-                  <img
-                    :src="fileService.getFileUrl(image.path)"
-                    :alt="image.ten"
-                    loading="lazy"
-                    class="card-img-top"
-                    style="height: 200px; object-fit: cover"
-                  />
+                    <div class="card mb-2">
+                      <h4
+                        class="card-header"
+                        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+                      >
+                        {{ image.ten }}
+                      </h4>
+                      <img
+                        :src="fileService.getFileUrl(image.path)"
+                        :alt="image.ten"
+                        loading="lazy"
+                        class="card-img-top"
+                        style="height: 200px; object-fit: cover"
+                      />
 
-                  <div class="card-body">
-                    <button
-                      class="btn btn-danger btn-sm"
-                      type="button"
-                      @click="deleteImage(image.id)"
-                    >
-                      <i class="fa fa-trash"></i>
-                      Xóa ảnh
-                    </button>
+                      <div class="card-body">
+                        <button
+                          class="btn btn-danger btn-sm"
+                          type="button"
+                          @click="deleteImage(image.id)"
+                        >
+                          <i class="fa fa-trash"></i>
+                          Xóa ảnh
+                        </button>
+                      </div>
+                    </div>
                   </div>
+
+                  <div v-if="!images.length">Bạn chưa tải lên ảnh nào</div>
                 </div>
               </div>
-
-              <div v-if="!images.length">Bạn chưa tải lên ảnh nào</div>
             </div>
           </div>
         </div>
-
         <button class="btn btn-primary" type="submit">Cập nhật</button>
         <RouterLink to="/admin/products" class="btn btn-link"> Quay lại </RouterLink>
       </div>

@@ -1,9 +1,8 @@
 <template>
-  <nav>
-    <button class="btn">ADMIN CP</button>
-    <RouterLink to="/" class="btn btn-secondary">
-      <i class="fa fa-globe"></i>
-      Xem trang web
+  <nav class="bg-dark">
+    <RouterLink to="/" class="btn text-white">
+      <i class="fa fa-home"></i>
+      Trang chủ
     </RouterLink>
   </nav>
 </template>
@@ -17,7 +16,5 @@ export default {
 <style scoped>
 nav {
   padding: 5px 20px;
-  border-bottom: 1px solid #ddd;
-  background: #fdfdfd;
 }
 </style>

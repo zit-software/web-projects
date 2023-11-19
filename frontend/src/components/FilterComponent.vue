@@ -3,16 +3,24 @@
     <h5 class="card-header">{{ $props.title }}</h5>
 
     <div class="card-body">
-      <div class="mb-3">
-        <label class="form-label"> Tìm kiếm theo </label>
-        <select class="form-select" v-model="searchBy">
-          <option v-for="item in $props.items" :key="item.name" :value="item.name">
-            {{ item.title }}
-          </option>
-        </select>
-      </div>
+      <div class="d-flex align-items-end gap-2">
+        <div style="flex: 1">
+          <label class="form-label"> Tìm kiếm theo </label>
+          <select class="form-select" v-model="searchBy">
+            <option v-for="item in $props.items" :key="item.name" :value="item.name">
+              {{ item.title }}
+            </option>
+          </select>
+        </div>
 
-      <input type="text" placeholder="Từ khóa" class="form-control" v-model="term" />
+        <input
+          style="flex: 1"
+          type="text"
+          placeholder="Từ khóa"
+          class="form-control"
+          v-model="term"
+        />
+      </div>
     </div>
   </div>
 </template>

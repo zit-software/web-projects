@@ -1,42 +1,50 @@
 <template>
   <div class="container container-fluid py-4">
-    <div class="row">
-      <div class="col col-4">
-        <div class="card border-secondary shadow shadow-sm bg-light">
-          <div class="card-body">
-            <h5 class="card-title">Khách hàng <i class="fa fa-users"></i></h5>
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Mục quản lý</th>
+          <th>Mô tả</th>
+          <th></th>
+        </tr>
+      </thead>
 
-            <p class="card-text">Quản lý thông tin khách hàng</p>
+      <tbody>
+        <tr>
+          <td>
+            <i class="fa fa-users"></i>
+          </td>
+          <td>Khách hàng</td>
+          <td>Quản lý thông tin khách hàng</td>
+          <td>
+            <RouterLink to="/admin/customers" class="btn btn-outline-primary">Xem</RouterLink>
+          </td>
+        </tr>
 
-            <RouterLink to="/admin/customers" class="btn btn-secondary"> Xem </RouterLink>
-          </div>
-        </div>
-      </div>
+        <tr>
+          <td>
+            <i class="fa fa-box"></i>
+          </td>
+          <td>Hàng hóa</td>
+          <td>Quản lý thông tin hàng hóa</td>
+          <td>
+            <RouterLink to="/admin/products" class="btn btn-outline-primary">Xem</RouterLink>
+          </td>
+        </tr>
 
-      <div class="col col-4">
-        <div class="card border-secondary shadow shadow-sm bg-light">
-          <div class="card-body">
-            <h5 class="card-title">Hàng hóa <i class="fa fa-box"></i></h5>
-
-            <p class="card-text">Quản lý thông tin hàng hóa</p>
-
-            <RouterLink to="/admin/products" class="btn btn-secondary"> Xem </RouterLink>
-          </div>
-        </div>
-      </div>
-
-      <div class="col col-4">
-        <div class="card border-secondary shadow shadow-sm bg-light">
-          <div class="card-body">
-            <h5 class="card-title">Đơn hàng <i class="fa fa-file-invoice"></i></h5>
-
-            <p class="card-text">Quản lý đơn hàng</p>
-
-            <RouterLink to="/admin/invoices" class="btn btn-secondary"> Xem </RouterLink>
-          </div>
-        </div>
-      </div>
-    </div>
+        <tr>
+          <td>
+            <i class="fa fa-file"></i>
+          </td>
+          <td>Đơn hàng</td>
+          <td>Quản lý đơn hàng</td>
+          <td>
+            <RouterLink to="/admin/invoices" class="btn btn-outline-primary">Xem</RouterLink>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

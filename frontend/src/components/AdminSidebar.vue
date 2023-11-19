@@ -53,7 +53,6 @@ export default {
 .sidebar {
   width: 64px;
   border-right: 1px solid #ddd;
-  background: #222;
   display: flex;
   flex-direction: column;
   transition: 0.6s ease;
@@ -69,7 +68,6 @@ export default {
 }
 
 .back-btn {
-  color: #fff;
   cursor: pointer;
   padding: 10px 20px;
   display: flex;
@@ -77,6 +75,6 @@ export default {
 }
 
 .back-btn:hover {
-  background: #000;
+  background: #ddd;
 }
 </style>

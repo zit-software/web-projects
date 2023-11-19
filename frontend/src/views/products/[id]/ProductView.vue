@@ -35,12 +35,12 @@
         </p>
 
         <div class="d-flex gap-1 mb-3">
-          <button class="btn btn-success" disabled>
+          <button class="btn btn-outline-primary" disabled>
             <i class="fa-solid fa-dollar-sign"></i>
             {{ vndFormat(product.gia) }}
           </button>
 
-          <button class="btn btn-secondary" disabled>Còn lại: {{ product.soluong }}</button>
+          <button class="btn" disabled>Còn lại: {{ product.soluong }}</button>
         </div>
 
         <label class="form-label">Đặt hàng</label>

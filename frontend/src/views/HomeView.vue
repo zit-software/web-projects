@@ -1,15 +1,16 @@
 <template>
   <main>
-    <!-- Header-->
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Shop in style</h1>
-          <p class="lead fw-normal text-white-50 mb-0">Clothing Store For Your Wardrobe</p>
-        </div>
-      </div>
-    </header>
-    <!-- Section-->
+    <div
+      class="bg-dark py-5"
+      :style="{
+        background: `url(${clotherBanner})`,
+        aspectRatio: 4,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center'
+      }"
+    ></div>
+
     <section class="py-5">
       <div class="container px-2 px-lg-5">
         <div>
@@ -44,8 +45,8 @@
 
             <button
               @click="toggleSearchingPanel"
-              class="btn btn-primary"
-              :class="{ 'btn-warning': isSearching }"
+              class="btn"
+              :class="{ 'btn-primary': isSearching, 'btn-secondary': !isSearching }"
             >
               <i class="fa-solid fa-filter"></i>
             </button>
@@ -53,7 +54,6 @@
 
           <FilterComponent
             v-if="isSearching"
-            class="animate__animated animate__faster animate__fadeInDown filter-component"
             v-model="filter"
             title="Tìm kiếm sản phẩm"
             :items="[
@@ -75,7 +75,7 @@
             :product="product"
           />
         </div>
-        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 5px">
+        <div style="display: flex; justify-content: center; align-items: center; gap: 5px">
           <ul class="pagination" style="margin-bottom: 0">
             <li
               class="page-item"
@@ -109,24 +109,19 @@
               </a>
             </li>
           </ul>
-
-          <select v-model="pageSize" class="form-select" style="width: 150px">
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-          </select>
         </div>
       </div>
     </section>
   </main>
 </template>
 <script>
-import hanghoaService from '@/services/hanghoa.service'
-import fileService from '@/services/file.service'
-import vndFormat from '@/utils/vndFormat'
 import FilterComponent from '@/components/FilterComponent.vue'
-import { ref } from 'vue'
 import ProductCard from '@/components/ProductCard.vue'
+import fileService from '@/services/file.service'
+import hanghoaService from '@/services/hanghoa.service'
+import vndFormat from '@/utils/vndFormat'
+import { ref } from 'vue'
+import clotherBanner from '@/assets/images/clother-banner.jpg'
 
 export default {
   name: 'HomeView',
@@ -136,7 +131,7 @@ export default {
   },
   data() {
     const products = ref([])
-    const pageSize = ref(5)
+    const pageSize = ref(20)
     const total = ref([])
     const page = ref(1)
     const filter = ref({ searchBy: 'ten', term: '' })
@@ -154,7 +149,8 @@ export default {
       filter,
       sortBy,
       direction,
-      isSearching
+      isSearching,
+      clotherBanner
     }
   },
   beforeMount() {
@@ -217,15 +213,6 @@ export default {
       return fileService.getFileUrl(path)
     },
     async toggleSearchingPanel() {
-      if (this.isSearching) {
-        const panel = document.querySelector('.filter-component')
-        panel.classList.add('animate__fadeOutUp')
-        setTimeout(() => {
-          this.isSearching = !this.isSearching
-          panel.classList.remove('animate__fadeOutUp')
-        }, 800)
-        return
-      }
       this.isSearching = !this.isSearching
     }
   },
