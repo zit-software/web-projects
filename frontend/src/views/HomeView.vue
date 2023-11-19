@@ -161,11 +161,13 @@ import fileService from '@/services/file.service'
 import vndFormat from '@/utils/vndFormat'
 import FilterComponent from '@/components/FilterComponent.vue'
 import { ref } from 'vue'
+import ProductCard from '@/components/ProductCard.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    FilterComponent
+    FilterComponent,
+    ProductCard
   },
   data() {
     const products = ref([])
@@ -174,7 +176,7 @@ export default {
     const page = ref(1)
     const filter = ref({ searchBy: 'ten', term: '' })
     const isLoading = ref(false)
-    const sortBy = ref(null)
+    const sortBy = ref('')
     const direction = ref(1)
     const isSearching = ref(false)
 
@@ -200,7 +202,7 @@ export default {
     page() {
       this.updateProductList()
     },
-    filter(value) {
+    filter() {
       this.updateProductList()
     },
     sortBy() {
