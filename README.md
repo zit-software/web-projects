@@ -18,8 +18,10 @@ cp .env.example .env
 ### Install packages
 
 ```sh
-npm run install
+npm install
 ```
+
+> Using `npm install -f` if installation fails
 
 ### Run on development mode
 
@@ -58,6 +60,12 @@ cp .env.example .env.local
 ```
 
 - `VITE_APP_API_URL`: Api server url
+
+### Install packages
+
+```sh
+npm install
+```
 
 ### Run on development mode
 
