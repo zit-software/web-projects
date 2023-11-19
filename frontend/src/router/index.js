@@ -76,6 +76,10 @@ const router = createRouter({
         {
           path: 'invoices/:id',
           component: () => import('@/views/admin/invoices/AdminInvoiceDetail.vue')
+        },
+        {
+          path: 'invoices/:id/delete',
+          component: () => import('@/views/admin/invoices/AdminDeleteInvoice.vue')
         }
       ]
     }

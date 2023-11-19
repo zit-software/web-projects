@@ -90,14 +90,18 @@
               <td>{{ invoice?.kh.diachi }}</td>
               <td>
                 <div class="d-flex justify-content-round gap-2">
-                  <button class="btn btn-info">
-                    <i class="fa-solid fa-pencil"></i>
-                    Sửa
-                  </button>
-                  <button class="btn btn-danger">
-                    <i class="fa-solid fa-trash"></i>
-                    Xóa
-                  </button>
+                  <RouterLink :to="`/admin/invoices/${invoice._id}`">
+                    <button class="btn btn-info">
+                      <i class="fa-solid fa-pencil"></i>
+                      Sửa
+                    </button>
+                  </RouterLink>
+                  <RouterLink :to="`/admin/invoices/${invoice._id}/delete`">
+                    <button class="btn btn-danger">
+                      <i class="fa-solid fa-trash"></i>
+                      Xóa
+                    </button>
+                  </RouterLink>
                 </div>
               </td>
             </tr>

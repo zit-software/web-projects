@@ -28,6 +28,9 @@ class HangHoaService {
   async xoaChiTiet(id) {
     return await this.#client.delete('/chitiet/' + id)
   }
+  async deleteById(id) {
+    return await this.#client.delete('/' + id)
+  }
 }
 
 export default new HangHoaService()
