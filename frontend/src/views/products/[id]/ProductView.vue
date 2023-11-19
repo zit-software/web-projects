@@ -109,6 +109,9 @@ export default {
     cartStore() {
       if (!this.product) return
       this.cartItem = cartStore.getItemById(this.product.id)
+    },
+    $route() {
+      this.getProductData()
     }
   },
   methods: {
