@@ -3,30 +3,6 @@
     <span class="spinner-border" v-if="!product"></span>
     <div class="row" v-else>
       <div class="col col-12 col-md-6">
-        <img
-          v-if="product.images[imgIndex]"
-          :src="fileService.getFileUrl(product.images[imgIndex].path)"
-          :alt="product.images[imgIndex].ten"
-          class="product-image"
-        />
-
-        <div class="d-flex gap-2 my-2" style="overflow: auto">
-          <img
-            v-for="(image, index) in product.images"
-            :key="image.id"
-            :src="fileService.getFileUrl(image.path)"
-            :alt="image.ten"
-            style="width: 150px; aspect-ratio: 1; cursor: pointer"
-            class="product-image"
-            :class="{
-              'border-primary': imgIndex === index
-            }"
-            @click="imgIndex = index"
-          />
-        </div>
-      </div>
-
-      <div class="col col-12 col-md-6">
         <h2>{{ product.ten }}</h2>
 
         <p>
@@ -52,17 +28,41 @@
           :max="product.soluong"
         />
 
-        <a href="#" @click="addToCart" class="btn btn-secondary d-block mb-2">
-          <i class="fa fa-cart-plus"> </i>
-          Thêm vào giỏ hàng
-        </a>
+        <div class="d-flex">
+          <button @click="addToCart" class="btn btn-secondary d-block mb-2">
+            <i class="fa fa-cart-plus"> </i>
+            Thêm vào giỏ hàng
+          </button>
 
-        <a href="#" class="btn btn-primary d-block" @click="buy"> Mua </a>
+          <button class="btn btn-primary d-block" @click="buy">Mua</button>
+        </div>
 
         <div v-if="cartItem">
           Đã có <span style="font-weight: bold">{{ cartItem.soluong }}</span> sản phẩm này trong giỏ
           hàng
         </div>
+        <div class="d-flex gap-2 my-2" style="overflow: auto">
+          <img
+            v-for="(image, index) in product.images"
+            :key="image.id"
+            :src="fileService.getFileUrl(image.path)"
+            :alt="image.ten"
+            style="width: 150px; aspect-ratio: 1; cursor: pointer"
+            class="product-image"
+            :class="{
+              'border-primary': imgIndex === index
+            }"
+            @click="imgIndex = index"
+          />
+        </div>
+      </div>
+      <div class="col col-12 col-md-6">
+        <img
+          v-if="product.images[imgIndex]"
+          :src="fileService.getFileUrl(product.images[imgIndex].path)"
+          :alt="product.images[imgIndex].ten"
+          class="product-image"
+        />
       </div>
     </div>
 

@@ -1,10 +1,4 @@
 <template>
-  <div class="admin-pannel" v-if="isAdmin">
-    <RouterLink class="btn btn-sm btn-warning" to="/admin">
-      <i class="fa fa-shield"></i>
-      ADMIN CP
-    </RouterLink>
-  </div>
   <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
       <RouterLink class="navbar-brand" to="/">Toy4Kid</RouterLink>
@@ -33,7 +27,11 @@
           </RouterLink>
         </ul>
         <div class="d-flex gap-1">
-          <RouterLink class="btn btn-outline-dark" to="/cart">
+          <RouterLink v-if="isAdmin" class="btn-primary btn" to="/admin">
+            <i class="fa fa-shield"></i>
+            ADMIN CP
+          </RouterLink>
+          <RouterLink v-else class="btn btn-outline-dark" to="/cart">
             <i class="fa fa-cart-shopping"></i>Cart<span
               class="badge bg-dark text-white ms-1 rounded-pill"
               >{{ numberOfItem }}</span
@@ -152,10 +150,15 @@ export default {
 
 <style scoped>
 .admin-pannel {
+  max-height: 300px;
+  min-height: 200px;
+  height: fit-content;
   padding: 10px;
   background: #000;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  right: 0;
+  bottom: 50%;
 }
 </style>

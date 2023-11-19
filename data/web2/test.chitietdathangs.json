@@ -1,1 +1,38 @@
-[]
+[{
+  "_id": {
+    "$oid": "655a56d85191a3e77604acad"
+  },
+  "hanghoa": {
+    "$oid": "655a3714fa854119cad6ba0c"
+  },
+  "soluong": 1,
+  "gia": 450000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2023-11-19T18:41:28.479Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T18:41:28.479Z"
+  },
+  "id": 1000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "655a56d85191a3e77604acb1"
+  },
+  "hanghoa": {
+    "$oid": "6559eda103cdc1da139337e5"
+  },
+  "soluong": 1,
+  "gia": 500000,
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2023-11-19T18:41:28.486Z"
+  },
+  "updatedAt": {
+    "$date": "2023-11-19T18:41:28.486Z"
+  },
+  "id": 1001,
+  "__v": 0
+}]

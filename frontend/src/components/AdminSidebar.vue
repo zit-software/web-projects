@@ -23,9 +23,9 @@
       />
     </div>
 
-    <div class="back-btn" @click="toggle">
+    <!-- <div class="back-btn" @click="toggle">
       <i class="fa" :class="{ 'fa-angle-left': isOpened, 'fa-angle-right': !isOpened }"></i>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
   name: 'AdminSidebar',
   components: { AdminSidebarItem },
   data() {
-    const isOpened = ref(true)
+    const isOpened = ref(false)
 
     return { isOpened }
   },
@@ -51,6 +51,11 @@ export default {
 
 <style scoped>
 .sidebar {
+  position: relative;
+  top: 25%;
+  right: 10px;
+  height: fit-content;
+  max-height: 350px;
   width: 64px;
   border-right: 1px solid #fff;
   display: flex;

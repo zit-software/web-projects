@@ -11,95 +11,97 @@
       v-slot="{ errors, values }"
       @submit="updateProduct"
     >
-      <h5 class="card-header">
-        Cập nhật sản phẩm <strong>{{ product.ten }}</strong>
-      </h5>
-
-      <div class="card-body">
-        <div class="mb-2">
-          <label for="ten">
-            Tên hàng hóa
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            type="text"
-            class="form-control"
-            name="ten"
-            id="ten"
-            :class="{ 'is-invalid': errors.ten }"
-          />
-          <ErrorMessage name="ten" class="invalid-feedback" />
-        </div>
-
-        <div class="mb-2">
-          <label for="mota">
-            Mô tả
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            as="textarea"
-            class="form-control"
-            name="mota"
-            id="mota"
-            :class="{ 'is-invalid': errors.mota }"
-          />
-          <ErrorMessage name="mota" class="invalid-feedback" />
-        </div>
-
-        <div class="mb-2">
-          <label for="gia">
-            Giá
-            <span class="text-danger">*</span>
-          </label>
-          <Field
-            type="number"
-            class="form-control"
-            name="gia"
-            id="gia"
-            :class="{ 'is-invalid': errors.gia }"
-          />
-          <span v-if="values.gia">
-            {{ vndFormat(values.gia) }}
-          </span>
-          <ErrorMessage name="gia" class="invalid-feedback" />
-        </div>
-
-        <div class="mb-2">
-          <label for="soluong"> Số lượng </label>
-          <Field
-            type="number"
-            class="form-control"
-            name="soluong"
-            id="soluong"
-            :class="{ 'is-invalid': errors.soluong }"
-          />
-          <ErrorMessage name="soluong" class="invalid-feedback" />
-        </div>
-
-        <div class="mb-2">
-          <label for="ghichu"> Ghi chú </label>
-          <Field
-            as="textarea"
-            class="form-control"
-            name="ghichu"
-            id="ghichu"
-            :class="{ 'is-invalid': errors.ghichu }"
-          />
-          <ErrorMessage name="ghichu" class="invalid-feedback" />
-        </div>
-
-        <div class="upload-toolbar">
+      <div class="d-flex justify-content-between">
+        <h5 class="card-header w-100">
+          Cập nhật sản phẩm <strong>{{ product.ten }}</strong>
+        </h5>
+        <div style="right: 10px; top: 2px" class="upload-toolbar position-absolute">
           <label class="btn btn-success btn-sm">
             <i class="fa fa-file-upload"></i>
             Thêm ảnh
             <input type="file" accept="image/*" hidden @change="addImage" />
           </label>
         </div>
+      </div>
 
-        <div class="file-list py-3">
+      <div class="card-body">
+        <div class="row">
+          <div class="mb-2 col-6">
+            <label for="ten">
+              Tên hàng hóa
+              <span class="text-danger">*</span>
+            </label>
+            <Field
+              type="text"
+              class="form-control"
+              name="ten"
+              id="ten"
+              :class="{ 'is-invalid': errors.ten }"
+            />
+            <ErrorMessage name="ten" class="invalid-feedback" />
+          </div>
+
+          <div class="mb-2 col-6">
+            <label for="mota">
+              Mô tả
+              <span class="text-danger">*</span>
+            </label>
+            <Field
+              as="textarea"
+              class="form-control"
+              name="mota"
+              id="mota"
+              :class="{ 'is-invalid': errors.mota }"
+            />
+            <ErrorMessage name="mota" class="invalid-feedback" />
+          </div>
+          <div class="mb-2 col-6">
+            <label for="gia">
+              Giá
+              <span class="text-danger">*</span>
+            </label>
+            <Field
+              type="number"
+              class="form-control"
+              name="gia"
+              id="gia"
+              :class="{ 'is-invalid': errors.gia }"
+            />
+            <span v-if="values.gia">
+              {{ vndFormat(values.gia) }}
+            </span>
+            <ErrorMessage name="gia" class="invalid-feedback" />
+          </div>
+
+          <div class="mb-2 col-6">
+            <label for="soluong"> Số lượng </label>
+            <Field
+              type="number"
+              class="form-control"
+              name="soluong"
+              id="soluong"
+              :class="{ 'is-invalid': errors.soluong }"
+            />
+            <ErrorMessage name="soluong" class="invalid-feedback" />
+          </div>
+
+          <div class="mb-2 col-12">
+            <label for="ghichu"> Ghi chú </label>
+            <Field
+              as="textarea"
+              class="form-control"
+              name="ghichu"
+              id="ghichu"
+              :class="{ 'is-invalid': errors.ghichu }"
+            />
+            <ErrorMessage name="ghichu" class="invalid-feedback" />
+          </div>
+        </div>
+
+        <div class="py-3">
           <div class="container container-fluid">
-            <div class="row">
-              <div class="col col-12 col-md-6 col-lg-4" v-for="image in images" :key="image._id">
+            <div class="row justify-content-center">
+              <div class="col col-12 col-md-6 col-lg-3" v-for="image in images" :key="image._id">
                 <div class="card mb-2">
                   <h4
                     class="card-header"

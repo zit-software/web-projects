@@ -6,19 +6,10 @@
           <img class="image" style="width: 100%" src="@/assets/images/banner.webp" />
         </div>
         <div
-          class="col col-12 col-lg-8 form-container mt-5 fst-italic animate__animated animate__lightSpeedInRight"
+          class="col col-12 col-lg-8 form-container mt-5 fst-italic animate__animated animate__bounceIn"
         >
           <div class="d-flex align-items-center">
             <h1>Thông tin cá nhân</h1>
-            <button
-              type="button"
-              class="btn btn-dark ms-2"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              <i class="fa-solid fa-lock"></i>
-              Đổi mật khẩu
-            </button>
           </div>
           <VeeForm
             :initial-values="user"
@@ -73,6 +64,15 @@
               <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-floppy-disk"></i>
                 Lưu
+              </button>
+              <button
+                type="button"
+                class="btn btn-dark ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <i class="fa-solid fa-lock"></i>
+                Đổi mật khẩu
               </button>
             </div>
           </VeeForm>

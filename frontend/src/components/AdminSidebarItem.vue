@@ -1,7 +1,7 @@
 <template>
   <RouterLink :to="$props.path" class="item">
     <i :class="$props.icon"></i>
-    <span :class="{ show: $props.showTitle }">{{ $props.title }}</span>
+    <span class="text-black" :class="{ show: $props.showTitle }">{{ $props.title }}</span>
   </RouterLink>
 </template>
 
