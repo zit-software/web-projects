@@ -255,12 +255,9 @@ export default {
     async updateRow(id) {
       try {
         await dathangService.updateChiTiet(id, this.editingPayload)
-        this.$toast.success('Cập nhật thành công', {
-          position: 'top-right',
-          duration: 2000
-        })
         this.cancelEdit()
-        this.getDetail()
+        await this.update()
+        await this.getDetail()
       } catch (error) {
         this.$toast.error(error.message, {
           position: 'top-right',
@@ -268,7 +265,20 @@ export default {
         })
       }
     },
-    removeRow(id) {}
+    async removeRow(id) {
+      try {
+        await dathangService.xoaChiTiet(id)
+
+        this.cancelEdit()
+        await this.update()
+        await this.getDetail()
+      } catch (error) {
+        this.$toast.error(error.message, {
+          position: 'top-right',
+          duration: 2000
+        })
+      }
+    }
   },
   data() {
     const data = ref(null)

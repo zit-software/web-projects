@@ -25,8 +25,8 @@ class HangHoaService {
   async updateChiTiet(id, body) {
     return await this.#client.put('/chitiet/' + id, body)
   }
-  async xoaChiTiet(id, idChiTiet) {
-    return await this.#client.delete('/chitiet/' + id, body)
+  async xoaChiTiet(id) {
+    return await this.#client.delete('/chitiet/' + id)
   }
 }
 

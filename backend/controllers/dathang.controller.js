@@ -205,11 +205,15 @@ class DatHangController {
 		try {
 			const id = req.params.id;
 			const newChiTiet = await ChiTietDatHangModel.findOneAndDelete({ id }, { returnDocument: true });
-			await DatHangModel.findByIdAndUpdate(newChiTiet.dh, {
-				$pull: {
-					chitiets: newChiTiet._id,
-				},
-			});
+			console.log(newChiTiet);
+			await DatHangModel.findOneAndUpdate(
+				{ id: newChiTiet.dh },
+				{
+					$pull: {
+						chitiets: newChiTiet._id,
+					},
+				}
+			);
 			return res.status(200).json(newChiTiet);
 		} catch (error) {
 			return res.status(400).send({ message: error.message });
