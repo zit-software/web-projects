@@ -1,11 +1,13 @@
 <template>
   <main>
     <!-- Header-->
-    <header class="bg-dark py-5">
-      <div class="container px-4 px-lg-5 my-5">
+    <header class="">
+      <div class="banner py-5 container-fluid d-flex align-items-center justify-content-center">
         <div class="text-center text-white">
-          <h1 class="display-4 fw-bolder">Shop in style</h1>
-          <p class="lead fw-normal text-white-50 mb-0">Clothing Store For Your Wardrobe</p>
+          <h1 style="font-size: 72px" class="display-4 fw-bolder text-black">Đồ Chơi Cho Bé</h1>
+          <p style="font-size: 50px" class="lead fw-normal mb-0 text-black">
+            Niềm Vui Cho Tương Lai Nhỏ!
+          </p>
         </div>
       </div>
     </header>
@@ -148,6 +150,20 @@
     </section>
   </main>
 </template>
+<style>
+header {
+  display: flex;
+  justify-content: center;
+}
+div.banner {
+  background-image: url('@/assets/images/banner.webp');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 600px;
+}
+</style>
 <script>
 import hanghoaService from '@/services/hanghoa.service'
 import fileService from '@/services/file.service'

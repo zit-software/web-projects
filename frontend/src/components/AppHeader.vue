@@ -7,7 +7,7 @@
   </div>
   <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container px-4 px-lg-5">
-      <RouterLink class="navbar-brand" to="/">Shopping</RouterLink>
+      <RouterLink class="navbar-brand" to="/">Toy4Kid</RouterLink>
       <button
         class="navbar-toggler"
         type="button"
