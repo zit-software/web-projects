@@ -11,99 +11,71 @@
     </header>
     <!-- Section-->
     <section class="py-5">
-      <div class="container-fluid px-2 px-lg-5">
+      <div class="container px-2 px-lg-5">
         <div>
           <div class="d-flex align-items-end mb-2">
             <h3 style="font-weight: bold">Danh Sách Sản Phẩm</h3>
-            <div style="max-width: 500px; margin-left: 32px" class="d-flex align-items-end">
-              <div class="me-3">
-                <button
-                  @click="toggleSearchingPanel"
-                  class="btn btn-primary"
-                  :class="{ 'btn-warning': isSearching }"
-                >
-                  <i class="fa-solid fa-filter"></i>
-                </button>
-              </div>
-              <div style="width: 250px">
-                <label>Sắp xếp theo</label>
-                <select
-                  required
-                  placeholder="Chon trường sắp xếp"
-                  class="form-select"
-                  v-model="sortBy"
-                >
-                  <option value="" disabled selected>Chọn trường để sắp xếp</option>
-                  <option value="gia">Giá</option>
-                  <option value="ten">Tên</option>
-                  <option value="createdAt">Ngày tạo</option>
-                </select>
-              </div>
-              <div
-                @click="toggleDirection"
-                style="margin-top: 20px; margin-left: 8px"
-                v-if="direction === 1"
+          </div>
+          <div class="d-flex align-items-end mb-2 gap-2">
+            <div style="width: 250px">
+              <label>Sắp xếp theo</label>
+              <select
+                required
+                placeholder="Chon trường sắp xếp"
+                class="form-select"
+                v-model="sortBy"
               >
+                <option value="" disabled selected>Chọn trường để sắp xếp</option>
+                <option value="gia">Giá</option>
+                <option value="ten">Tên</option>
+                <option value="createdAt">Ngày tạo</option>
+              </select>
+            </div>
+            <div v-if="sortBy">
+              <div @click="toggleDirection" class="btn btn-secondary" v-if="direction === 1">
                 <i class="fa-solid fa-sort-up"></i>
                 Tăng dần (A-Z, 0-9)
               </div>
-              <div
-                @click="toggleDirection"
-                style="margin-top: 20px; margin-left: 8px"
-                v-if="direction === -1"
-              >
+              <div @click="toggleDirection" class="btn btn-secondary" v-if="direction === -1">
                 <i class="fa-solid fa-sort-down"></i>
                 Giảm dần (Z-A, 9-0)
               </div>
             </div>
+
+            <button
+              @click="toggleSearchingPanel"
+              class="btn btn-primary"
+              :class="{ 'btn-warning': isSearching }"
+            >
+              <i class="fa-solid fa-filter"></i>
+            </button>
           </div>
+
           <FilterComponent
-            class="animate__animated animate__faster animate__fadeInDown filter-component"
             v-if="isSearching"
+            class="animate__animated animate__faster animate__fadeInDown filter-component"
             v-model="filter"
             title="Tìm kiếm sản phẩm"
             :items="[
               { name: 'ten', title: 'Tên' },
               { name: 'mota', title: 'Mô tả' }
             ]"
-          ></FilterComponent>
+          />
         </div>
 
         <div
           v-auto-animate
           id="product-list-container"
-          class="row gx-2 gx-lg-2 row-cols-3 row-cols-md-5 row-cols-xl-6"
+          class="row gx-2 gx-lg-2 row-cols-3 row-cols-md-5 row-cols-xl-6 gap-2"
         >
-          <div v-for="product in products" class="col mb-5" :key="product.id">
-            <div class="card h-100">
-              <!-- Product image--><img
-                v-if="product.images.length > 0"
-                class="card-img-top"
-                :src="getImage(product.images[0].path)"
-                alt="..."
-                style="aspect-ratio: 1; object-fit: cover"
-              />
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder">{{ product.ten }}</h5>
-                  <!-- Product price-->{{ vndFormat(product.gia) }}
-                </div>
-              </div>
-
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                <div class="text-center">
-                  <RouterLink :to="`/products/${product.id}`">
-                    <a class="btn btn-outline-dark mt-auto" href="#">Xem chi tiết</a>
-                  </RouterLink>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductCard
+            v-for="product in products"
+            class="col mb-5"
+            :key="product.id"
+            :product="product"
+          />
         </div>
-        <div style="display: flex; justify-content: flex-end; align-items: center">
+        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 5px">
           <ul class="pagination" style="margin-bottom: 0">
             <li
               class="page-item"
@@ -154,11 +126,13 @@ import fileService from '@/services/file.service'
 import vndFormat from '@/utils/vndFormat'
 import FilterComponent from '@/components/FilterComponent.vue'
 import { ref } from 'vue'
+import ProductCard from '@/components/ProductCard.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    FilterComponent
+    FilterComponent,
+    ProductCard
   },
   data() {
     const products = ref([])
@@ -167,7 +141,7 @@ export default {
     const page = ref(1)
     const filter = ref({ searchBy: 'ten', term: '' })
     const isLoading = ref(false)
-    const sortBy = ref(null)
+    const sortBy = ref('')
     const direction = ref(1)
     const isSearching = ref(false)
 
@@ -193,7 +167,7 @@ export default {
     page() {
       this.updateProductList()
     },
-    filter(value) {
+    filter() {
       this.updateProductList()
     },
     sortBy() {

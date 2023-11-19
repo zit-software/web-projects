@@ -44,34 +44,45 @@
         </div>
 
         <label class="form-label">Đặt hàng</label>
-        <div class="d-flex gap-1">
-          <input
-            class="form-control"
-            placeholder="Số lượng"
-            type="number"
-            v-model="quantity"
-            min="1"
-            :max="product.soluong"
-          />
-          <button @click="addToCart" class="btn btn-secondary">
-            <i class="fa fa-cart-plus"> </i>
-          </button>
-          <RouterLink to="/cart">
-            <button class="btn btn-primary">
-              <a>Mua</a>
-            </button>
-          </RouterLink>
-        </div>
+        <input
+          class="form-control mb-2"
+          placeholder="Số lượng"
+          type="number"
+          v-model="quantity"
+          min="1"
+          :max="product.soluong"
+        />
+
+        <a href="#" @click="addToCart" class="btn btn-secondary d-block mb-2">
+          <i class="fa fa-cart-plus"> </i>
+          Thêm vào giỏ hàng
+        </a>
+
+        <RouterLink to="/cart" class="btn btn-primary d-block"> Mua </RouterLink>
+
         <div v-if="cartItem">
           Đã có <span style="font-weight: bold">{{ cartItem.soluong }}</span> sản phẩm này trong giỏ
           hàng
         </div>
       </div>
     </div>
+
+    <h3>Các sản phẩm khác</h3>
+
+    <div class="row">
+      <div
+        class="col col-12 col-md-4 col-lg-3 col-xl-2 mb-2 p-1"
+        v-for="product in otherProducts"
+        :key="product.id"
+      >
+        <ProductCard :product="product" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import ProductCard from '@/components/ProductCard.vue'
 import fileService from '@/services/file.service'
 import hanghoaService from '@/services/hanghoa.service'
 import { useCartStore } from '@/stores/cart'
@@ -87,7 +98,8 @@ export default {
     const imgIndex = ref(0)
     const quantity = ref(1)
     const cartItem = ref(null)
-    return { product, fileService, imgIndex, quantity, cartItem }
+    const otherProducts = ref([])
+    return { product, fileService, imgIndex, quantity, cartItem, otherProducts }
   },
   watch: {
     product(value) {
@@ -104,7 +116,6 @@ export default {
       try {
         const { id } = this.$route.params
         const res = await hanghoaService.getById(id)
-
         this.product = res
       } catch (error) {
         console.log(error)
@@ -118,10 +129,19 @@ export default {
       this.cartItem = cartStore.getItemById(this.product.id)
       this.$toast.success('Thêm vào giỏ hàng thành công!', { position: 'top-right' })
     },
-    vndFormat
+    vndFormat,
+    async getOtherProducts() {
+      try {
+        this.otherProducts = (await hanghoaService.getAll()).data
+      } catch (error) {
+        this.$toast.error(error.message)
+      }
+    }
   },
   beforeMount() {
     this.getProductData()
-  }
+    this.getOtherProducts()
+  },
+  components: { ProductCard }
 }
 </script>
