@@ -76,7 +76,6 @@ export default {
           })
         })
         this.$toast.success('Đặt hàng thành công', {
-          position: 'top-right',
           duration: 3000
         })
         cartStore.clearCart()
