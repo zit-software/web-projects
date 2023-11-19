@@ -65,7 +65,7 @@
           Thêm vào giỏ hàng
         </a>
 
-        <RouterLink to="/cart" class="btn btn-primary d-block"> Mua </RouterLink>
+        <a href="#" class="btn btn-primary d-block" @click="buy"> Mua </a>
 
         <div v-if="cartItem">
           Đã có <span style="font-weight: bold">{{ cartItem.soluong }}</span> sản phẩm này trong giỏ
@@ -146,6 +146,10 @@ export default {
       } catch (error) {
         this.$toast.error(error.message)
       }
+    },
+    buy() {
+      this.addToCart()
+      this.$router.push('/cart')
     }
   },
   beforeMount() {
