@@ -204,6 +204,7 @@ export default {
 
         const res = await hanghoaService.addImage(this.$route.params.id, file)
         this.images.push(res)
+        this.$toast.success('Đã thêm ảnh sản phẩm')
       } catch (error) {
         this.$toast.error(error.message)
       }
@@ -213,6 +214,7 @@ export default {
         await hanghoaService.deleteImage(this.$route.params.id, imageId)
 
         this.images = this.images.filter((image) => image.id !== imageId)
+        this.$toast.info('Đã xóa ảnh sản phẩm')
       } catch (error) {
         this.$toast.error(error.message)
       }
